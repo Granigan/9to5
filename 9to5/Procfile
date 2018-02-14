@@ -1,1 +1,1 @@
-web:    java -cp target/classes:target/dependency/* 9to5.Webserver.Main
+web:    java -jar target/classes:target/dependency/* 9to5.Webserver.Main
