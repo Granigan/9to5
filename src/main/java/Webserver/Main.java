@@ -1,4 +1,4 @@
-package webserver;
+package Webserver;
 
 import spark.Spark;
 import java.sql.*;
