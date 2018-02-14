@@ -3,7 +3,6 @@ package Webserver;
 import spark.Spark;
 import java.sql.*;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,12 +17,12 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Server started.");
         
+        HashMap map = new HashMap<>();
+
         Spark.get("*", (req, res) -> {
-        
-            
-            
-        return " ";
-        });
+
+            return new ModelAndView(map, "index");
+        }, new ThymeleafTemplateEngine());
 
         System.out.println("");
     }
