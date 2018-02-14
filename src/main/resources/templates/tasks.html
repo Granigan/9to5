@@ -1,0 +1,33 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Tasks</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <h1>Tasks</h1>
+
+        <ul>
+            <li th:each="task : ${tasks}">
+                <span th:text="${task.name}">Task</span>
+                <form th:action="@{~/tasks/{id}(id=${task.id})}" method="post">
+                    <select name="userId">
+                        <option th:each="user: ${users}" th:value="${user.id}" th:text="${user.name}">
+                            user
+                        </option>
+                    </select>
+                    <input type="submit" value="Assign task!"/>
+                </form>
+            </li>
+        </ul>
+
+        <h2>Add new task</h2>
+
+        <form method="POST" action="/tasks">
+            <input type="text" name="name"/><br/>
+            <input type="submit" value="Add!"/>
+        </form>
+    </body>
+</html>
