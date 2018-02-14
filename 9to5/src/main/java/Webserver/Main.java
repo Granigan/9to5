@@ -15,8 +15,12 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 public class Main {
 
     public static void main(String[] args) {
+
+        if (System.getenv("PORT") != null) {
+            Spark.port(Integer.valueOf(System.getenv("PORT")));
+        }
         System.out.println("Server started.");
-        
+
         HashMap map = new HashMap<>();
 
         Spark.get("*", (req, res) -> {
