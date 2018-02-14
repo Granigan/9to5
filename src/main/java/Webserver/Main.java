@@ -1,4 +1,4 @@
-package Webserver;
+package webserver;
 
 import spark.Spark;
 import java.sql.*;
@@ -22,6 +22,8 @@ public class Main {
         System.out.println("Server started.");
 
         HashMap map = new HashMap<>();
+        
+        map.put(1, new Raaka_aine("this"));
 
         Spark.get("*", (req, res) -> {
 
