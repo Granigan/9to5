@@ -2,7 +2,7 @@ package Webserver;
 
 //import java.sql.*;
 //import java.io.File;
-//import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashMap;
 //import java.util.List;
 import spark.ModelAndView;
@@ -22,7 +22,7 @@ public class Main {
 
         HashMap map = new HashMap<>();
         
-        map.put(1, new Raaka_aine("this"));
+        map.put("1", new Raaka_aine("this"));
 
         Spark.get("*", (req, res) -> {
 

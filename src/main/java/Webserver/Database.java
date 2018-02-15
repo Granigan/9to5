@@ -1,4 +1,4 @@
-package webserver;
+package Webserver;
 
 //Luokka tietokannan getConnection-metodia varten (ja yleisesti tietokannan
 //alkusointuja varten
