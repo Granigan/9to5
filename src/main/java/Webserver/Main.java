@@ -4,6 +4,7 @@ package Webserver;
 //import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 //import java.util.List;
 import spark.ModelAndView;
 import spark.Spark;
@@ -20,11 +21,18 @@ public class Main {
         }
         System.out.println("Server started.");
 
-        HashMap map = new HashMap<>();
-        
-        map.put("1", new Raaka_aine("this"));
+        // TODO: Database-yhteyden luominen
+        List<Raaka_aine> raakaaineet = new ArrayList<>();
+        raakaaineet.add(new Raaka_aine("Banaani"));
+        raakaaineet.add(new Raaka_aine("suola"));
+        raakaaineet.add(new Raaka_aine("suoli"));
+        raakaaineet.add(new Raaka_aine("suole"));
 
         Spark.get("*", (req, res) -> {
+
+            HashMap map = new HashMap<>();
+
+            map.put("raaka_aineet", raakaaineet);
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
