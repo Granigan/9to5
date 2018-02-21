@@ -20,10 +20,15 @@ public class Main {
         // Luodaan TestiDao herokun tietokannan testausta varten
         TestiDao testi = new TestiDao();
 
+        
+        // Tällä asetetaan testidaoon muutama testitieto aina palvelimen käynnistyessä.
+        // Tämäkin olemassa lähinnä testaamista ja valmistelua varten.
         for (int i = 0; i < 10; i++) {
-
+            try {
             testi.saveOne((int) (Math.random() * 1000));
-
+            } catch (Exception e) {
+                
+            }
         }
 
         // Tämä asettaa herokun portin ympäristömuuttujan määräämäksi,
@@ -32,7 +37,7 @@ public class Main {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
 
-        System.out.println("Server started.");
+        System.out.println("Server starting.");
 
         // TODO: Database-yhteyden luominen
         List<Raaka_aine> raakaaineet = new ArrayList<>();
@@ -41,12 +46,29 @@ public class Main {
         raakaaineet.add(new Raaka_aine("suoli"));
         raakaaineet.add(new Raaka_aine("suole"));
 
+        
+        
+        
+        
         /**
          *
          * R E I T I T
          *
          *
          */
+        
+        
+        
+        // herokun postgresql:n testaamista varten.
+        Spark.get("/testi", (req, res) -> {
+            testi.saveOne((int) (Math.random() * 1000));
+            res.redirect("/");
+            return " ";
+        });
+        
+        
+        
+        // Tästä alkavat "oikeat" eli tuotantoreitit
         Spark.get("*", (req, res) -> {
 
             HashMap map = new HashMap<>();
@@ -65,22 +87,7 @@ public class Main {
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
-
-        Spark.get("/testi", (req, res) -> {
-
-            //HashMap map = new HashMap<>();
-            System.out.println("Tallennusta tehdään testimielessä!");
-
-            testi.saveOne((int) (Math.random() * 1000));
-            //map.put("raaka_aineet", raakaaineet);
-
-            res.redirect("/");
-            return " ";
-
-            // return new ModelAndView(map, "index");
-        });
-
-        System.out.println("");
+        
     }
 
 }

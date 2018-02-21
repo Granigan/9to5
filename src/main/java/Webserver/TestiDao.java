@@ -30,14 +30,13 @@ public class TestiDao {
 
     }
 
-    public boolean saveOne(int i) {
-        System.out.println("SaveOne käynnistetty!");
+    public boolean saveOne(int i) throws Exception {
         try {
             
             Connection con = getConnection();
             PreparedStatement prep = con.prepareStatement("INSERT INTO test (num) VALUES(?)");
             prep.setInt(1, i);
-            prep.executeUpdate();
+            prep.execute();
             
             prep.close();
             con.close();
@@ -51,13 +50,8 @@ public class TestiDao {
     public static Connection getConnection() throws Exception {
         String dbUrl = System.getenv("JDBC_DATABASE_URL");
         if (dbUrl != null && dbUrl.length() > 0) {
-            System.out.println("1");
             return DriverManager.getConnection(dbUrl);
-            
         }
-        
-        System.out.println("2");
-
         return DriverManager.getConnection("jdbc:sqlite:resepti.db");
     }
 
