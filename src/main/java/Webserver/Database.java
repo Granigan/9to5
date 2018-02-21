@@ -16,7 +16,8 @@ public class Database {
     
      */
     // Yrittää yhteyttä PostGres-tietokantaan. Jos sitä ei ole, ottaa yhteyden paikalliseen tietokantaan.
-    public static Connection getConnection() throws Exception {
+    //Huom, muutin Exceptionin SQLExceptioniksi, muuten tuli erroria metodia kutsuttaessa.
+    public static Connection getConnection() throws SQLException {
         String dbUrl = System.getenv("JDBC_DATABASE_URL");
         if (dbUrl != null && dbUrl.length() > 0) {
             return DriverManager.getConnection(dbUrl);

@@ -20,14 +20,13 @@ public class Main {
         // Luodaan TestiDao herokun tietokannan testausta varten
         TestiDao testi = new TestiDao();
 
-        
         // Tällä asetetaan testidaoon muutama testitieto aina palvelimen käynnistyessä.
         // Tämäkin olemassa lähinnä testaamista ja valmistelua varten.
         for (int i = 0; i < 10; i++) {
             try {
-            testi.saveOne((int) (Math.random() * 1000));
+                testi.saveOne((int) (Math.random() * 1000));
             } catch (Exception e) {
-                
+
             }
         }
 
@@ -46,28 +45,19 @@ public class Main {
         raakaaineet.add(new Raaka_aine("suoli"));
         raakaaineet.add(new Raaka_aine("suole"));
 
-        
-        
-        
-        
         /**
          *
          * R E I T I T
          *
          *
          */
-        
-        
-        
         // herokun postgresql:n testaamista varten.
         Spark.get("/testi", (req, res) -> {
             testi.saveOne((int) (Math.random() * 1000));
             res.redirect("/");
             return " ";
         });
-        
-        
-        
+
         // Tästä alkavat "oikeat" eli tuotantoreitit
         Spark.get("*", (req, res) -> {
 
@@ -87,7 +77,7 @@ public class Main {
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
-        
+
     }
 
 }
