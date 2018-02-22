@@ -3,6 +3,9 @@ package Webserver;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,30 +20,55 @@ public class TestiDao {
     public TestiDao() {
 
         try {
-            Connection con = getConnection(); 
+            Connection con = getConnection();
             PreparedStatement prep = con.prepareStatement("CREATE TABLE test (id SERIAL PRIMARY KEY, num integer)");
             prep.executeUpdate();
             prep.close();
             con.close();
             System.out.println("testitable luotu.");
-        
+
         } catch (Exception e) {
             System.out.println("Joko ei yhteyttä luotaessa tai jokin muu ongelma yhteydessä: " + e);
         }
 
     }
 
+    public List<Integer> getAll() {
+        List<Integer> ret = new ArrayList<>();
+
+        try {
+
+            Connection con = getConnection();
+            PreparedStatement prep = con.prepareStatement("SELECT * FROM test");
+
+            ResultSet r = prep.executeQuery();
+
+            while (r.next()) {
+                ret.add(new Integer(r.findColumn("num")));
+            }
+
+            r.close();
+            prep.close();
+            con.close();
+
+            return ret;
+        } catch (Exception e) {
+
+            return null;
+        }
+    }
+
     public boolean saveOne(int i) throws Exception {
         try {
-            
+
             Connection con = getConnection();
             PreparedStatement prep = con.prepareStatement("INSERT INTO test (num) VALUES(?)");
             prep.setInt(1, i);
             prep.execute();
-            
+
             prep.close();
             con.close();
-                        return true;
+            return true;
         } catch (Exception e) {
             System.out.println("Ongelma tietokantayhteydessä TestiDai.java: " + e);
         }

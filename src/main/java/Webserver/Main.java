@@ -40,10 +40,12 @@ public class Main {
 
         // TODO: Database-yhteyden luominen
         List<Raaka_aine> raakaaineet = new ArrayList<>();
+        /*
         raakaaineet.add(new Raaka_aine("Banaani"));
         raakaaineet.add(new Raaka_aine("suola"));
         raakaaineet.add(new Raaka_aine("suoli"));
         raakaaineet.add(new Raaka_aine("suole"));
+         */
 
         /**
          *
@@ -59,20 +61,34 @@ public class Main {
         });
 
         // Tästä alkavat "oikeat" eli tuotantoreitit
-        Spark.get("*", (req, res) -> {
-
-            HashMap map = new HashMap<>();
-
-            map.put("raaka_aineet", raakaaineet);
-
-            return new ModelAndView(map, "index");
-        }, new ThymeleafTemplateEngine());
-
         Spark.get("/reseptit", (req, res) -> {
 
             HashMap map = new HashMap<>();
 
             // TODO: 
+            map.put("raaka_aineet", raakaaineet);
+
+            return new ModelAndView(map, "index");
+        }, new ThymeleafTemplateEngine());
+        
+        
+        Spark.get("/int", (req, res) -> {
+
+            HashMap map = new HashMap<>();
+            
+            List<Integer> intit = new ArrayList<>();
+            
+            intit = testi.getAll();
+            map.put("intit", intit);
+            return new ModelAndView(map, "int");
+        }, new ThymeleafTemplateEngine());
+        
+        
+        // "Catch-all" -reitti
+        Spark.get("*", (req, res) -> {
+
+            HashMap map = new HashMap<>();
+
             map.put("raaka_aineet", raakaaineet);
 
             return new ModelAndView(map, "index");
