@@ -44,7 +44,7 @@ public class TestiDao {
             ResultSet r = prep.executeQuery();
 
             while (r.next()) {
-                ret.add(new Integer(r.findColumn("num")));
+                ret.add(new Integer(r.getInt("num")));
             }
 
             r.close();
