@@ -45,6 +45,9 @@ public class RaakaaineDao implements Dao {
                 osuma = new Raaka_aine(rs.getInt("id"), rs.getString("nimi"), rs.getString("mittayksikko"), rs.getString("kuvaus"));
             }
 
+            rs.close();
+            haku.close();
+            con.close();
             return osuma;
 
         } catch (SQLException e) {
@@ -61,7 +64,7 @@ public class RaakaaineDao implements Dao {
         try {
 
             Connection con = getConnection();
-            PreparedStatement prep = con.prepareStatement("SELECT * FROM test");
+            PreparedStatement prep = con.prepareStatement("SELECT * FROM Raakaaine");
 
             ResultSet r = prep.executeQuery();
 
@@ -75,11 +78,9 @@ public class RaakaaineDao implements Dao {
 
             return ret;
         } catch (Exception e) {
-
+            System.out.println("Ongelma findAll-metodissa: " + e);
             return null;
         }
-
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -90,7 +91,7 @@ public class RaakaaineDao implements Dao {
                 Raaka_aine vanha = (Raaka_aine) findOne(uusi);
                 Connection con = getConnection();
                 PreparedStatement paivita = con.prepareStatement(""
-                        + "UPDATE Raakaaine SET (mittayksikko = ?, kuvaus = ? WHERE nimi = ?)");
+                        + "UPDATE Raakaaine SET mittayksikko = ?, kuvaus = ? WHERE nimi = ?");
                 paivita.setString(1, uusi.getMittayksikko());
                 paivita.setString(2, uusi.getKuvaus());
                 paivita.setString(3, uusi.getNimi());
