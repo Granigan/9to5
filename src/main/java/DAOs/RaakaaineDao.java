@@ -122,6 +122,8 @@ public class RaakaaineDao implements Dao {
 
     @Override
     public void delete(Object key) throws SQLException {
+        // TODO: poistaminen
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

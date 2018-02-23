@@ -30,7 +30,7 @@ public class Main {
 
             }
         }
-        
+
         RaakaaineDao raakaDao = new RaakaaineDao();
         raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
 
@@ -69,28 +69,46 @@ public class Main {
 
             HashMap map = new HashMap<>();
             List<Raaka_aine> raaka_aineet = new ArrayList<>();
-            raaka_aineet = raakaDao.findAll(); 
+            raaka_aineet = raakaDao.findAll();
             map.put("raaka_aineet", raaka_aineet);
 
             return new ModelAndView(map, "raaka-aine");
         }, new ThymeleafTemplateEngine());
-        
-        
+
         Spark.post("/raaka_aineet", (req, res) -> {
-           // Lisätään raaka-aine tietokantaan
-           
-           String raakisNimi = req.queryParams("nimi");
-           String raakisMittis = req.queryParams("mittayksikko");
-           String raakisKuvaus = req.queryParams("kuvaus");
-           
-           raakaDao.saveOrUpdate(new Raaka_aine(0, raakisNimi, raakisMittis, raakisKuvaus));
-            
-          res.redirect("/raaka_aineet");
-          return " ";
-            
+            // Lisätään raaka-aine tietokantaan
+
+            String raakisNimi = req.queryParams("nimi");
+            String raakisMittis = req.queryParams("mittayksikko");
+            String raakisKuvaus = req.queryParams("kuvaus");
+
+            raakaDao.saveOrUpdate(new Raaka_aine(0, raakisNimi, raakisMittis, raakisKuvaus));
+
+            res.redirect("/raaka_aineet");
+            return " ";
         });
-        
-        
+
+        Spark.post("/raaka_aineet/delete", (req, res) -> {
+
+            String nimi = req.queryParams("raaka_aine");
+            
+            /*
+             TODO: 
+            if (reseptidao.isUsed(nimi)) {
+                // Tähän se mitä tehdään jos raaka-aine on käytössä
+            } else {
+                raakaDao.delete(nimi);
+            }
+            */
+
+            return "<p>9to5 Corp has not implented this feature as of yet.</p>";
+            
+            // Lopuksi redirect, kun kaikki ominaisuudet luotu
+            
+           // res.redirect("/raaka_aineet");
+            //return " ";
+        });
+
         Spark.get("/reseptit", (req, res) -> {
 
             HashMap map = new HashMap<>();
@@ -100,20 +118,18 @@ public class Main {
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
-        
-        
+
         Spark.get("/int", (req, res) -> {
 
             HashMap map = new HashMap<>();
-            
+
             List<Integer> intit = new ArrayList<>();
-            
+
             intit = testi.getAll();
             map.put("intit", intit);
             return new ModelAndView(map, "int");
         }, new ThymeleafTemplateEngine());
-        
-        
+
         // "Catch-all" -reitti
         Spark.get("*", (req, res) -> {
 
