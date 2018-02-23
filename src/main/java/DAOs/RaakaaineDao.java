@@ -3,6 +3,7 @@ package DAOs;
 import static Webserver.Database.getConnection;
 import Webserver.Raaka_aine;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -43,7 +44,7 @@ public class RaakaaineDao implements Dao {
             if (rs.next()) {
                 osuma = new Raaka_aine(rs.getInt("id"), rs.getString("nimi"), rs.getString("mittayksikko"), rs.getString("kuvaus"));
             }
-            
+
             return osuma;
 
         } catch (SQLException e) {
@@ -54,7 +55,31 @@ public class RaakaaineDao implements Dao {
 
     @Override
     public List findAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        List<Raaka_aine> ret = new ArrayList<>();
+
+        try {
+
+            Connection con = getConnection();
+            PreparedStatement prep = con.prepareStatement("SELECT * FROM test");
+
+            ResultSet r = prep.executeQuery();
+
+            while (r.next()) {
+                ret.add(new Raaka_aine(r.getInt("id"), r.getString("nimi"), r.getString("mittayksikko"), r.getString("kuvaus")));
+            }
+
+            r.close();
+            prep.close();
+            con.close();
+
+            return ret;
+        } catch (Exception e) {
+
+            return null;
+        }
+
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -65,7 +90,7 @@ public class RaakaaineDao implements Dao {
                 Raaka_aine vanha = (Raaka_aine) findOne(uusi);
                 Connection con = getConnection();
                 PreparedStatement paivita = con.prepareStatement(""
-                        + "UPDATE Raakaine SET (mittayksikko = ?, kuvaus = ? WHERE nimi = ?");
+                        + "UPDATE Raakaaine SET (mittayksikko = ?, kuvaus = ? WHERE nimi = ?)");
                 paivita.setString(1, uusi.getMittayksikko());
                 paivita.setString(2, uusi.getKuvaus());
                 paivita.setString(3, uusi.getNimi());
