@@ -1,4 +1,4 @@
-package Webserver;
+package DAOs;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
