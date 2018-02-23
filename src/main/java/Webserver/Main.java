@@ -1,22 +1,22 @@
 package Webserver;
 
-import DAOs.TestiDao;
+import DAOs.*;
+import java.sql.SQLException;
 import java.util.*;
 import spark.*;
-import Webserver.Database;
-import java.sql.*;
-//import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-//import java.util.List;
-//import java.util.List;
-import spark.ModelAndView;
-import spark.TemplateEngine;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+//import java.io.File;
+//import java.util.ArrayList;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.List;
+//import spark.ModelAndView;
+//import spark.TemplateEngine;
+//import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         // Luodaan TestiDao herokun tietokannan testausta varten
         TestiDao testi = new TestiDao();
@@ -30,6 +30,9 @@ public class Main {
 
             }
         }
+        
+        RaakaaineDao raakaDao = new RaakaaineDao();
+        raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
 
         // Tämä asettaa herokun portin ympäristömuuttujan määräämäksi,
         // jos ympäristömuuttuja on olemassa. Herokua varten tärkeä!
