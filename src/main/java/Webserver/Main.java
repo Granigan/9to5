@@ -65,6 +65,32 @@ public class Main {
         });
 
         // Tästä alkavat "oikeat" eli tuotantoreitit
+        Spark.get("/raaka_aineet", (req, res) -> {
+
+            HashMap map = new HashMap<>();
+            List<Raaka_aine> raaka_aineet = new ArrayList<>();
+            raaka_aineet = raakaDao.findAll(); 
+            map.put("raaka_aineet", raaka_aineet);
+
+            return new ModelAndView(map, "raaka-aine");
+        }, new ThymeleafTemplateEngine());
+        
+        
+        Spark.post("/raaka_aineet", (req, res) -> {
+           // Lisätään raaka-aine tietokantaan
+           
+           String raakisNimi = req.queryParams("nimi");
+           String raakisMittis = req.queryParams("mittayksikko");
+           String raakisKuvaus = req.queryParams("kuvaus");
+           
+           raakaDao.saveOrUpdate(new Raaka_aine(0, raakisNimi, raakisMittis, raakisKuvaus));
+            
+          res.redirect("/raaka_aineet");
+          return " ";
+            
+        });
+        
+        
         Spark.get("/reseptit", (req, res) -> {
 
             HashMap map = new HashMap<>();
