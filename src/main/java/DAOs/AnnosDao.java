@@ -6,15 +6,13 @@ import Webserver.Database;
 import static Webserver.Database.getConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class AnnosDao implements Dao<Annos, Integer> {
-//    private Database database;
-//    
-//    public AnnosDao(Database database) {
-//        this.database = database;
-//    }
+public class AnnosDao implements Dao {
+
     
     public AnnosDao() throws SQLException {
         try {
@@ -34,8 +32,25 @@ public class AnnosDao implements Dao<Annos, Integer> {
     }
 
     @Override
-    public Annos findOne(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Annos findOne(Object key) throws SQLException {
+        try {
+            String etsittava = (String) key;
+            Connection connection = getConnection();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Annos WHERE nimi = ?");
+            stmt.setString(1, etsittava);
+
+            ResultSet rs = stmt.executeQuery();
+            if(!rs.next()) {
+                return null;
+            }
+
+            Annos annos = new Annos(rs.getInt("id"), rs.getString("nimi"));
+            return annos;
+
+        } catch (SQLException e) {
+            System.out.println("ongelma etsiessä yhtä annosta" + e.getMessage());
+        }
+        return null;
     }
 
     @Override
@@ -44,12 +59,14 @@ public class AnnosDao implements Dao<Annos, Integer> {
     }
 
     @Override
-    public Annos saveOrUpdate(Annos object) throws SQLException {
+    public Object saveOrUpdate(Object annos) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Integer key) throws SQLException {
+    public void delete(Object key) throws SQLException {
+        // TODO: poistaminen
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
