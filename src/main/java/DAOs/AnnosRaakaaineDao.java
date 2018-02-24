@@ -5,11 +5,17 @@
  */
 package DAOs;
 
+import Webserver.AnnosRaakaaine;
 import static Webserver.Database.getConnection;
+import Webserver.Raaka_aine;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -38,8 +44,8 @@ public class AnnosRaakaaineDao implements Dao {
         }
         try {
             PreparedStatement createIndexAnnos = con.prepareStatement(
-                    "CREATE INDEX IF NOT EXISTS AnnosRaakaaineAnnosIdx "
-                    + "ON AnnosRaakaaine (annos_id);");
+                    "CREATE UNIQUE INDEX IF NOT EXISTS AnnosRaakaaineAnnosIdx "
+                    + "ON AnnosRaakaaine (annos_id, jarjestys);");
             createIndexAnnos.executeUpdate();
             createIndexAnnos.close();
         } catch (Exception e) {
@@ -54,29 +60,150 @@ public class AnnosRaakaaineDao implements Dao {
         } catch (Exception e) {
             System.out.println("ongelma luodessa raakaaine-taulun indeksiä: " + e.getMessage());
         }
-        
+
         con.close();
 
     }
 
     @Override
     public Object findOne(Object key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            AnnosRaakaaine etsittava = (AnnosRaakaaine) key;
+            AnnosRaakaaine osuma = null;
+            Connection con = getConnection();
+            PreparedStatement haku = con.prepareStatement(""
+                    + "SELECT * FROM Raakaaine WHERE annos_id = ? AND raakaaine_id = ? and jarjestys = ?");
+            haku.setInt(1, etsittava.getAnnosId());
+            haku.setInt(2, etsittava.getRaakaaineId());
+            haku.setInt(3, etsittava.getJarjestys());
+            ResultSet rs = haku.executeQuery();
+            if (rs.next()) {
+                osuma = populoi(rs);
+            }
+
+            rs.close();
+            haku.close();
+            con.close();
+            return osuma;
+
+        } catch (SQLException e) {
+            System.out.println("ongelma etsiessä yhtä AnnosRaaka-ainetta" + e.getMessage());
+        }
+        return null;
     }
 
     @Override
     public List findAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        List<AnnosRaakaaine> ret = new ArrayList<>();
+
+        try {
+
+            Connection con = getConnection();
+            PreparedStatement prep = con.prepareStatement("SELECT * FROM AnnosRaakaaine ORDER BY jarjestys");
+
+            ResultSet r = prep.executeQuery();
+
+            while (r.next()) {
+                ret.add(populoi(r));
+            }
+
+            r.close();
+            prep.close();
+            con.close();
+
+            return ret;
+        } catch (Exception e) {
+            System.out.println("Ongelma AnnosRaakaaine findAll-metodissa: " + e);
+            return null;
+        }
+    }
+
+    private AnnosRaakaaine populoi(ResultSet r) throws SQLException {
+        AnnosRaakaaine annRaak = new AnnosRaakaaine();
+        annRaak.setAnnosId(r.getInt("annos_id"));
+        annRaak.setRaakaaineId(r.getInt("raakaaine_id"));
+        annRaak.setJarjestys(r.getInt("jarjestys"));
+        annRaak.setMaara(r.getInt("maara"));
+        annRaak.setOhje(r.getString("ohje"));
+        return annRaak;
     }
 
     @Override
-    public Object saveOrUpdate(Object object) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Object saveOrUpdate(Object annosaine) throws SQLException {
+
+        try {
+            AnnosRaakaaine uusi = (AnnosRaakaaine) annosaine;
+            if (findOne(uusi) != null) {
+                Connection con = getConnection();
+                PreparedStatement paivita = con.prepareStatement(""
+                        + "UPDATE AnnosRaakaaine SET "
+                        + "maara = ?, "
+                        + "ohje = ?, "
+                        + "WHERE annos_id = ? "
+                        + "AND raakaaine_id = ? "
+                        + "AND jarjestys = ?");
+                paivita.setInt(1, uusi.getMaara());
+                paivita.setString(2, uusi.getOhje());
+                paivita.setInt(3, uusi.getAnnosId());
+                paivita.setInt(4, uusi.getRaakaaineId());
+                paivita.setInt(5, uusi.getJarjestys());
+                paivita.executeUpdate();
+                paivita.close();
+                con.close();
+
+            } else {
+
+                // Lisää uuden. jarjestys = saman annoksen max(jarjestys, 0)+1
+                // COALESCE palauttaa sulkujen sisällä olevan listan ensimmäisen ei null arvon
+                Connection con = getConnection();
+                PreparedStatement lisaa = con.prepareStatement(""
+                        + "INSERT INTO AnnosRaakaaine ("
+                        + "annos_id, raakaaine_id, jarjestys, maara, ohje) "
+                        + "SELECT ?, ?, COALESCE(MAX(jarjestys), 0)+1, ? , ? "
+                        + "FROM AnnosRaakaaine "
+                        + "WHERE annos_id = ? ");
+                lisaa.setInt(1, uusi.getAnnosId());
+                lisaa.setInt(2, uusi.getRaakaaineId());
+                lisaa.setInt(3, uusi.getMaara());
+                lisaa.setString(4, uusi.getOhje());
+                lisaa.setInt(5, uusi.getAnnosId());
+
+                lisaa.executeUpdate();
+                lisaa.close();
+                con.close();
+            }
+
+        } catch (SQLException e) {
+            System.out.println("ongelma lisätessä uutta raaka-ainetta" + e.getMessage());
+        }
+        return true;
+
     }
 
     @Override
     public void delete(Object key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try {
+            AnnosRaakaaine pois = (AnnosRaakaaine)key;
+
+            Connection con = getConnection();
+            PreparedStatement poista = con.prepareStatement(""
+                    + "DELETE FROM AnnosRaakaaine "
+                    + "WHERE annos_id = ? "
+                    + "AND raakaaine_id = ? "
+                    + "AND jarjestys = ?");
+            poista.setInt(3, pois.getAnnosId());
+            poista.setInt(4, pois.getRaakaaineId());
+            poista.setInt(5, pois.getJarjestys());
+            poista.executeUpdate();
+            poista.close();
+            con.close();
+
+        } catch (SQLException e) {
+            System.out.println("Kauhea ongelma poistettaessa raaka-ainetta annoksesta" + e.getMessage());
+        }
+
     }
 
 }

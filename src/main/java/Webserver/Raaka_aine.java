@@ -11,6 +11,7 @@ public class Raaka_aine {
         this.nimi = nimi;
         this.id = id;
         this.kuvaus = kuvaus;
+        this.mittayksikko = mittayksikko;
     }
 
     public String getMittayksikko() {
