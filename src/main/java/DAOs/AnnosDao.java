@@ -59,8 +59,25 @@ public class AnnosDao implements Dao {
     }
 
     @Override
-    public Object saveOrUpdate(Object annos) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Annos saveOrUpdate(Object key) throws SQLException {
+        try {
+            Annos talletettava = (Annos) key;
+            
+            if (findOne(talletettava.getNimi()) == null) {
+                Connection connection = getConnection();
+                PreparedStatement stmt = connection.prepareStatement("INSERT INTO Annos (nimi) VALUES (?)");
+                stmt.setString(1, talletettava.getNimi());
+
+                stmt.executeUpdate();
+                stmt.close();
+                connection.close();
+                
+            }
+
+        } catch (SQLException e) {
+            System.out.println("ongelma lisättäessä yhtä annosta" + e.getMessage());
+        }
+        return null;
     }
 
     @Override
