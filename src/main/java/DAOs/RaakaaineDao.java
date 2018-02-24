@@ -1,5 +1,6 @@
 package DAOs;
 
+import Webserver.AnnosRaakaaine;
 import static Webserver.Database.getConnection;
 import Webserver.Raaka_aine;
 import java.sql.*;
@@ -12,8 +13,8 @@ DAO raaka-aineille, constructorissa create table
 public class RaakaaineDao implements Dao {
 
     public RaakaaineDao() throws SQLException {
+        Connection con = getConnection();
         try {
-            Connection con = getConnection();
             PreparedStatement createTable = con.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS Raakaaine ("
                     + "id SERIAL PRIMARY KEY,"
@@ -23,11 +24,21 @@ public class RaakaaineDao implements Dao {
                     + ");");
             createTable.executeUpdate();
             createTable.close();
-            con.close();
 
         } catch (Exception e) {
             System.out.println("ongelma luodessa raakaaine-taulua: " + e.getMessage());
         }
+        try {
+            // Luodaan indeksi, jolla voidaan hakea aineita lower(nimi)
+            PreparedStatement createIndexAineNimi = con.prepareStatement(
+                    "CREATE INDEX IF NOT EXISTS RaakaaineNimiLowerIdx "
+                    + "ON Raakaaine ((lower(nimi)));");
+            createIndexAineNimi.executeUpdate();
+            createIndexAineNimi.close();
+        } catch (Exception e) {
+            System.out.println("ongelma luodessa raakaaine-taulun indeksiä: " + e.getMessage());
+        }
+        con.close();
 
     }
 
@@ -37,12 +48,16 @@ public class RaakaaineDao implements Dao {
             Raaka_aine etsittava = (Raaka_aine) key;
             Raaka_aine osuma = null;
             Connection con = getConnection();
-            PreparedStatement haku = con.prepareStatement(""
-                    + "SELECT * FROM Raakaaine WHERE nimi = ?");
+            PreparedStatement haku = con.prepareStatement("SELECT "
+                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.ra.id) AS kaytossa"
+                    + "FROM Raakaaine ra LEFT OUTER JOIN AnnosRaakaaine ara "
+                    + "ON ra.id = ara.raakaaine_id "
+                    + "WHERE ra.nimi = ? "
+                    + "GROUP BY ra.id, ra.nimi, ra.mittayksikko");
             haku.setString(1, etsittava.getNimi());
             ResultSet rs = haku.executeQuery();
             if (rs.next()) {
-                osuma = new Raaka_aine(rs.getInt("id"), rs.getString("nimi"), rs.getString("mittayksikko"), rs.getString("kuvaus"));
+                osuma = populoi(rs);
             }
 
             rs.close();
@@ -64,12 +79,16 @@ public class RaakaaineDao implements Dao {
         try {
 
             Connection con = getConnection();
-            PreparedStatement prep = con.prepareStatement("SELECT * FROM Raakaaine");
+            PreparedStatement prep = con.prepareStatement("SELECT "
+                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.ra.id) AS kaytossa"
+                    + "FROM Raakaaine ra LEFT OUTER JOIN AnnosRaakaaine ara "
+                    + "ON ra.id = ara.raakaaine_id "
+                    + "GROUP BY ra.id, ra.nimi, ra.mittayksikko");
 
             ResultSet r = prep.executeQuery();
 
             while (r.next()) {
-                ret.add(new Raaka_aine(r.getInt("id"), r.getString("nimi"), r.getString("mittayksikko"), r.getString("kuvaus")));
+                ret.add(populoi(r));
             }
 
             r.close();
@@ -81,6 +100,49 @@ public class RaakaaineDao implements Dao {
             System.out.println("Ongelma findAll-metodissa: " + e);
             return null;
         }
+    }
+
+    public List findByNameCaseIns(String hakutermi) throws SQLException {
+
+        // Jos halutaan hakea nimellä joka on jotain sinne päin
+        List<Raaka_aine> ret = new ArrayList<>();
+
+        try {
+
+            Connection con = getConnection();
+            PreparedStatement prep = con.prepareStatement("SELECT "
+                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.ra.id) AS kaytossa"
+                    + "FROM Raakaaine ra LEFT OUTER JOIN AnnosRaakaaine ara "
+                    + "ON ra.id = ara.raakaaine_id "
+                    + "WHERE ra.nimi like '%?%'"
+                    + "GROUP BY ra.id, ra.nimi, ra.mittayksikko");
+
+            prep.setString(1, hakutermi);
+            ResultSet r = prep.executeQuery();
+
+            while (r.next()) {
+                ret.add(populoi(r));
+            }
+
+            r.close();
+            prep.close();
+            con.close();
+
+            return ret;
+        } catch (Exception e) {
+            System.out.println("Ongelma findAll-metodissa: " + e);
+            return null;
+        }
+    }
+
+    private Raaka_aine populoi(ResultSet r) throws SQLException {
+        Raaka_aine raak = new Raaka_aine();
+        raak.setId(r.getInt("id"));
+        raak.setNimi(r.getString("nimi"));
+        raak.setMittayksikko(r.getString("mittayksikko"));
+        raak.setKuvaus(r.getString("kuvaus"));
+        raak.setKaytossa(r.getInt("kaytossa"));
+        return raak;
     }
 
     @Override
@@ -123,8 +185,24 @@ public class RaakaaineDao implements Dao {
     @Override
     public void delete(Object key) throws SQLException {
         // TODO: poistaminen
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try {
+            Raaka_aine pois = (Raaka_aine) key;
+
+            Connection con = getConnection();
+            PreparedStatement poista = con.prepareStatement(""
+                    + "DELETE FROM Raakaaine "
+                    + "WHERE id = ? AND NOT EXISTS "
+                    + "(SELECT 1 FROM AnnosRaakaaine WHERE raakaaine_id = ?)");
+            poista.setInt(1, pois.getId());
+            poista.setInt(2, pois.getId());
+            poista.executeUpdate();
+            poista.close();
+            con.close();
+
+        } catch (SQLException e) {
+            System.out.println("Hirveä ongelma poistettaessa raaka-ainetta" + e.getMessage());
+        }
     }
 
 }

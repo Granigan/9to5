@@ -40,7 +40,7 @@ public class AnnosRaakaaineDao implements Dao {
             createTable.executeUpdate();
             createTable.close();
         } catch (Exception e) {
-            System.out.println("ongelma luodessa raakaaine-taulua: " + e.getMessage());
+            System.out.println("ongelma luodessa annosraakaaine-taulua: " + e.getMessage());
         }
         try {
             PreparedStatement createIndexAnnos = con.prepareStatement(
@@ -49,7 +49,7 @@ public class AnnosRaakaaineDao implements Dao {
             createIndexAnnos.executeUpdate();
             createIndexAnnos.close();
         } catch (Exception e) {
-            System.out.println("ongelma luodessa raakaaine-taulun indeksiä: " + e.getMessage());
+            System.out.println("ongelma luodessa annosraakaaine-taulun indeksiä: " + e.getMessage());
         }
         try {
             PreparedStatement createIndexAnnos = con.prepareStatement(
@@ -58,7 +58,7 @@ public class AnnosRaakaaineDao implements Dao {
             createIndexAnnos.executeUpdate();
             createIndexAnnos.close();
         } catch (Exception e) {
-            System.out.println("ongelma luodessa raakaaine-taulun indeksiä: " + e.getMessage());
+            System.out.println("ongelma luodessa annosraakaaine-taulun indeksiä: " + e.getMessage());
         }
 
         con.close();
