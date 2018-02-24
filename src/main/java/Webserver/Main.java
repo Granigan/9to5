@@ -129,7 +129,7 @@ public class Main {
 
             HashMap map = new HashMap<>();
             List<Integer> ARs = new ArrayList<>();
-            ARs = annosaineDao.findAll();
+            //ARs = annosaineDao.findAll();
             // TODO: tähän annosraakaaineiden haku
             
             
