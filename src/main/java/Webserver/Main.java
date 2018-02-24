@@ -34,6 +34,8 @@ public class Main {
         RaakaaineDao raakaDao = new RaakaaineDao();
         raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
 
+        AnnosDao annosDao = new AnnosDao();
+        
         // Tämä asettaa herokun portin ympäristömuuttujan määräämäksi,
         // jos ympäristömuuttuja on olemassa. Herokua varten tärkeä!
         if (System.getenv("PORT") != null) {
