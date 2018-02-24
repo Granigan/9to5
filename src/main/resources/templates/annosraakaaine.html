@@ -10,6 +10,13 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
+    
+    
+            <ol>
+            <li th:each="raakaaine : ${annosraakaaineet}">
+                <span th:text="${annosraakaaine}">annosraakaaine</span>
+            </li>
+        </ol>
     <body>
         <div>Tätä sivua ei tule olemaan lopullisessa versiossa</div>
     </body>

@@ -66,11 +66,12 @@ public class Main {
          *
          */
         // herokun postgresql:n testaamista varten.
+        /*
         Spark.get("/testi", (req, res) -> {
             testi.saveOne((int) (Math.random() * 1000));
             res.redirect("/");
             return " ";
-        });
+        });*/
 
         // Tästä alkavat "oikeat" eli tuotantoreitit
         Spark.get("/raaka_aineet", (req, res) -> {
@@ -108,11 +109,8 @@ public class Main {
                 raakaDao.delete(nimi);
             }
             */
-
             return "<p>9to5 Corp has not implented this feature as of yet.</p>";
-            
             // Lopuksi redirect, kun kaikki ominaisuudet luotu
-            
            // res.redirect("/raaka_aineet");
             //return " ";
         });
@@ -121,11 +119,24 @@ public class Main {
 
             HashMap map = new HashMap<>();
 
-            // TODO: 
+            // TODO: EI TOTEUTETTU
             map.put("raaka_aineet", raakaaineet);
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
+        
+        Spark.get("/annosraakaaine", (req, res) -> {
+
+            HashMap map = new HashMap<>();
+            List<Integer> ARs = new ArrayList<>();
+            ARs = annosaineDao.findAll();
+            // TODO: tähän annosraakaaineiden haku
+            
+            
+            map.put("annosraakaaineet", ARs);
+            return new ModelAndView(map, "annosraakaaine");
+        }, new ThymeleafTemplateEngine());
+
 
         Spark.get("/int", (req, res) -> {
 
@@ -138,6 +149,8 @@ public class Main {
             return new ModelAndView(map, "int");
         }, new ThymeleafTemplateEngine());
 
+        
+        
         // "Catch-all" -reitti
         Spark.get("*", (req, res) -> {
 
