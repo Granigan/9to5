@@ -39,6 +39,7 @@ public class Main {
         //annosDao.saveOrUpdate(new Annos(0, "jauhelihakeitto"));
         System.out.println(annosDao.findOne("jauhelihakeitto"));
         
+        AnnosRaakaaineDao annosaineDao = new AnnosRaakaaineDao();
         
         
         // Tämä asettaa herokun portin ympäristömuuttujan määräämäksi,
