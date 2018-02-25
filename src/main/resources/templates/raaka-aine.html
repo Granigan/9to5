@@ -28,7 +28,7 @@
                             <th>Poista</th>
                         </tr>
                     <ul style="list-style-type:none">
-                        <li th:each="raaka_aine : ${raaka_aineet}"/>
+                        <li th:each="raaka_aine : ${raaka_aineet}">
                         <tr>
                             <td><span th:text="${raaka_aine.nimi}"/></td>
                             <td><span th:text="${raaka_aine.mittayksikko}"/></td>
@@ -38,7 +38,7 @@
                                     <input type="submit" value="Poista"/>
                             </form></td>
                         </tr>
-                        <!-- </li> -->
+                        </li>
                     </ul>
 
                     
