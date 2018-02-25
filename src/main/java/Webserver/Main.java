@@ -156,7 +156,7 @@ public class Main {
                 // TODO: Tallennus tietokantaan
                 
                 String nimi = reseptiList.get(0);
-                reseptiList. clear();
+                //reseptiList. clear();
                 
                 Annos a = new Annos();
                 a.setNimi(nimi);
