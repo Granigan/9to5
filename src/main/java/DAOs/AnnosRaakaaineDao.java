@@ -75,7 +75,21 @@ public class AnnosRaakaaineDao implements Dao {
             AnnosRaakaaine osuma = null;
             Connection con = getConnection();
             PreparedStatement haku = con.prepareStatement(""
-                    + "SELECT * FROM Raakaaine WHERE annos_id = ? AND raakaaine_id = ? and jarjestys = ?");
+                    + "SELECT "
+                    + "ara.annos_id, "
+                    + "ara.raakaaine_id, "
+                    + "ara.jarjestys, "
+                    + "ara.maara, "
+                    + "ara.ohje, "
+                    + "ra.nimi, "
+                    + "ra.mittayksikko, "
+                    + "ra.kuvaus "
+                    + "FROM AnnosRaakaaine ara, Raakaaine ra "
+                    + "WHERE ara.annos_id = ? "
+                    + "AND ara.raakaaine_id = ? "
+                    + "AND ara.jarjestys = ?"
+                    + "ara.raakaaine_id = ra.id "
+                    + "ORDER BY jarjestys");
             haku.setInt(1, etsittava.getAnnosId());
             haku.setInt(2, etsittava.getRaakaaineId());
             haku.setInt(3, etsittava.getJarjestys());
@@ -110,7 +124,9 @@ public class AnnosRaakaaineDao implements Dao {
                     + "ara.jarjestys, "
                     + "ara.maara, "
                     + "ara.ohje, "
-                    + "ra.nimi "
+                    + "ra.nimi, "
+                    + "ra.mittayksikko, "
+                    + "ra.kuvaus "
                     + "FROM AnnosRaakaaine ara, Raakaaine ra "
                     + "WHERE ara.raakaaine_id = ra.id "
                     + "ORDER BY jarjestys");
@@ -146,7 +162,9 @@ public class AnnosRaakaaineDao implements Dao {
                     + "ara.jarjestys, "
                     + "ara.maara, "
                     + "ara.ohje, "
-                    + "ra.nimi "
+                    + "ra.nimi, "
+                    + "ra.mittayksikko, "
+                    + "ra.kuvaus "
                     + "FROM AnnosRaakaaine ara, Raakaaine ra "
                     + "WHERE ara.annos_id = ? "
                     + "AND ara.raakaaine_id = ra.id "
@@ -178,6 +196,8 @@ public class AnnosRaakaaineDao implements Dao {
         annRaak.setMaara(r.getInt("maara"));
         annRaak.setOhje(r.getString("ohje"));
         annRaak.setRaakaaineenNimi(r.getString("nimi"));
+        annRaak.setRaakaaineenMittayksikko(r.getString("mittayksikko"));
+        annRaak.setRaakaaineenKuvaus(r.getString("kuvaus"));
         return annRaak;
     }
 

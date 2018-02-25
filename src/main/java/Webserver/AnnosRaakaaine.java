@@ -13,6 +13,8 @@ public class AnnosRaakaaine {
     private Integer maara;
     private String ohje;
     private String raakaaineenNimi;
+    private String mittayksikko;
+    private String kuvaus;
 
     
     public AnnosRaakaaine() {
@@ -76,4 +78,18 @@ public class AnnosRaakaaine {
         return this.raakaaineenNimi;
     }
     
+    public void setRaakaaineenMittayksikko(String mittayksikko) {
+        this.mittayksikko = mittayksikko;
+    }
+    
+    public String getRaakaaineenMittayksikko() {
+        return this.mittayksikko;
+    }
+    public void setRaakaaineenKuvaus(String kuvaus) {
+        this.kuvaus = kuvaus;
+    }
+    
+    public String getRaakaaineenKuvaus() {
+        return this.kuvaus;
+    }
 }
