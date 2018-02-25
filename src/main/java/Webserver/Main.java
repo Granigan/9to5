@@ -137,9 +137,8 @@ public class Main {
 
             String id = req.params(":id");
             try {
-                Annos dummy = new Annos();
-                dummy.setId(Integer.parseInt(id));
-                annosDao.delete(dummy);
+                int dummy = Integer.parseInt(id);
+                annosDao.delete(dummy, annosaineDao);
             } catch (Exception e) {
                 System.out.println("Reseptin delete: Yritettiin muuntaa id integeriksi siinä onnistumatta");
             }
