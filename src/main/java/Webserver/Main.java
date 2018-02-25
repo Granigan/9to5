@@ -201,6 +201,8 @@ public class Main {
                 
                 });
 
+                reseptinCache.clear();
+                //reseptinCache = new ArrayList();
                 res.redirect("/reseptit");
                 return " ";
 
