@@ -52,6 +52,7 @@ public class Main {
             HashMap map = new HashMap<>();
             List<Raaka_aine> raaka_aineet = new ArrayList<>();
             raaka_aineet = raakaDao.findAll();
+            raaka_aineet.forEach(a -> {System.out.println("id:" + a.getId());});
             map.put("raaka_aineet", raaka_aineet);
 
             return new ModelAndView(map, "raaka-aine");
@@ -63,8 +64,13 @@ public class Main {
             String raakisNimi = req.queryParams("nimi");
             String raakisMittis = req.queryParams("mittayksikko");
             String raakisKuvaus = req.queryParams("kuvaus");
+            
+            Raaka_aine r = new Raaka_aine();
+            r.setNimi(raakisNimi);
+            r.setKuvaus(raakisKuvaus);
+            r.setMittayksikko(raakisMittis);
 
-            raakaDao.saveOrUpdate(new Raaka_aine(0, raakisNimi, raakisMittis, raakisKuvaus));
+            raakaDao.saveOrUpdate(r);
 
             res.redirect("/raaka_aineet");
             return " ";
