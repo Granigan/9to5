@@ -29,7 +29,30 @@
                 </li>
             </ul>
         </table>
-        
+        <table style="width:100%">
+            <tr>
+                
+                <th></th>
+                <th>Aine</th> 
+                <th>Määrä</th>
+                <th>Lisäysohje</th>
+            </tr>
+
+            <ul style="list-style-type:none">
+                <li th:each="annosaine : ${aineet}" style="list-style-type: none;">
+                <tr>
+                    <td><span th:text="${annosaine.jarjestys}"/></td>
+                    <td><span th:text="${annosaine.raakaaineenNimi}"/></td>
+                    <td><span th:text="${annosaine.maara}"/></td>
+                    <td><span th:text="${annosaine.ohje}"/></td>
+                </tr>
+                </li>
+            </ul>
+
+
+
+        </table>
+
         
         
         

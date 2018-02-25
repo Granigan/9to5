@@ -43,13 +43,13 @@ public class Main {
         // Välimuistissa oleva lisättävä resepti:
         List<Raaka_aine> raakaaineet = new ArrayList<>();
         List<AnnosRaakaaine> reseptinCache = new ArrayList();
-        
+
         //Säilyttää nimen ja kuvauksen
         List<String> nimiList = new ArrayList();
         nimiList.add(" ");
         List<String> kuvausList = new ArrayList();
         kuvausList.add(" ");
-        
+
         /**
          *
          * R E I T I T
@@ -62,7 +62,9 @@ public class Main {
             HashMap map = new HashMap<>();
             List<Raaka_aine> raaka_aineet = new ArrayList<>();
             raaka_aineet = raakaDao.findAll();
-            raaka_aineet.forEach(a -> {System.out.println("id:" + a.getId());});
+            raaka_aineet.forEach(a -> {
+                System.out.println("id:" + a.getId());
+            });
             map.put("raaka_aineet", raaka_aineet);
 
             return new ModelAndView(map, "raaka-aine");
@@ -74,7 +76,7 @@ public class Main {
             String raakisNimi = req.queryParams("nimi");
             String raakisMittis = req.queryParams("mittayksikko");
             String raakisKuvaus = req.queryParams("kuvaus");
-            
+
             Raaka_aine r = new Raaka_aine();
             r.setNimi(raakisNimi);
             r.setKuvaus(raakisKuvaus);
@@ -107,9 +109,9 @@ public class Main {
             List<Annos> reseptit = new ArrayList<>();
             reseptit = annosDao.findAll();
             for (Annos annos : reseptit) {
-               List<AnnosRaakaaine> aineet = new ArrayList<>();
-               aineet.addAll(annosaineDao.findAll(annos.getId()));
-               annos.setRaakaaineet(aineet);
+                List<AnnosRaakaaine> aineet = new ArrayList<>();
+                aineet.addAll(annosaineDao.findAll(annos.getId()));
+                annos.setRaakaaineet(aineet);
             }
             map.put("reseptit", reseptit);
 
@@ -121,15 +123,16 @@ public class Main {
             HashMap map = new HashMap<>();
             String id = req.params(":id");
             Annos annos = new Annos();
+            List<AnnosRaakaaine> aineet = new ArrayList<>();
             try {
                 annos = (Annos) annosDao.findById(Integer.parseInt(id));
-                List<AnnosRaakaaine> aineet = new ArrayList<>();
                 aineet.addAll(annosaineDao.findAll(annos.getId()));
                 annos.setRaakaaineet(aineet);
             } catch (Exception e) {
                 System.out.println("Reseptin haku: Yritettiin muuntaa id integeriksi siinä onnistumatta");
             }
             map.put("resepti", annos);
+            map.put("aineet", aineet);
             return new ModelAndView(map, "resepti");
         }, new ThymeleafTemplateEngine());
 
@@ -175,25 +178,24 @@ public class Main {
 
             if (req.queryParams("end") != null) {
                 // TODO: Tallennus tietokantaan
-                
+
                 String nimi = nimiList.get(0);
                 nimiList.clear();
                 nimiList.add(" ");
-                
+
                 String kuvaus = kuvausList.get(0);
                 kuvausList.clear();
                 kuvausList.add(" ");
-                
+
                 Annos a = new Annos();
                 a.setNimi(nimi);
                 a.setValmistusohje(kuvaus);
                 annosDao.saveOrUpdate(a);
                 //annosaineDao.saveOrUpdate();
-                
+
                 Annos currentAnnos = annosDao.findOne(a);
-                
-                        
-                        //(Annos) (annosDao.findOne(a
+
+                //(Annos) (annosDao.findOne(a
                 List<Byte> l = new ArrayList();
                 byte g = 0;
                 l.add(g);
@@ -205,14 +207,13 @@ public class Main {
                     ar.setJarjestys(l.size());
 
                     try {
-                    annosaineDao.saveOrUpdate(ar);
+                        annosaineDao.saveOrUpdate(ar);
                     } catch (SQLException e) {
                         System.out.println("Jokin meni pieleen reseptia tallennettaessa: " + e);
                     }
                     //ar.setAnnosId;
-                            
+
                     //count++;
-                
                 });
 
                 reseptinCache.clear();
@@ -230,7 +231,7 @@ public class Main {
                 } catch (NumberFormatException e) {
                     maara = 0;
                 }
-                
+
                 //Nimi talteen:
                 String nimi = req.queryParams("resNimi");
                 if (nimi != null) {
