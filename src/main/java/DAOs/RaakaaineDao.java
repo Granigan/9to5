@@ -62,11 +62,11 @@ public class RaakaaineDao implements Dao {
             Raaka_aine osuma = null;
             Connection con = getConnection();
             PreparedStatement haku = con.prepareStatement("SELECT "
-                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.ra.id) AS kaytossa"
+                    + "ra.id, ra.nimi, ra.mittayksikko, ra.kuvaus, count(ara.ra.id) AS kaytossa"
                     + "FROM Raakaaine ra LEFT OUTER JOIN AnnosRaakaaine ara "
                     + "ON ra.id = ara.raakaaine_id "
                     + "WHERE ra.nimi = ? "
-                    + "GROUP BY ra.id, ra.nimi, ra.mittayksikko");
+                    + "GROUP BY ra.id, ra.nimi, ra.mittayksikko, ra.kuvaus");
             haku.setString(1, etsittava.getNimi());
             ResultSet rs = haku.executeQuery();
             if (rs.next()) {
@@ -93,10 +93,10 @@ public class RaakaaineDao implements Dao {
 
             Connection con = getConnection();
             PreparedStatement prep = con.prepareStatement("SELECT "
-                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.raakaaine_id) AS kaytossa "
+                    + "ra.id, ra.nimi, ra.mittayksikko, ra.kuvaus, count(ara.raakaaine_id) AS kaytossa "
                     + "FROM Raakaaine ra LEFT OUTER JOIN AnnosRaakaaine ara "
                     + "ON ra.id = ara.raakaaine_id "
-                    + "GROUP BY ra.id, ra.nimi, ra.mittayksikko");
+                    + "GROUP BY ra.id, ra.nimi, ra.mittayksikko, ra.kuvaus");
 
             ResultSet r = prep.executeQuery();
 
@@ -124,11 +124,11 @@ public class RaakaaineDao implements Dao {
 
             Connection con = getConnection();
             PreparedStatement prep = con.prepareStatement("SELECT "
-                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.ra.id) AS kaytossa "
+                    + "ra.id, ra.nimi, ra.mittayksikko, ra.kuvaus, count(ara.ra.id) AS kaytossa "
                     + "FROM Raakaaine ra LEFT OUTER JOIN AnnosRaakaaine ara "
                     + "ON ra.id = ara.raakaaine_id "
                     + "WHERE ra.nimi like '%?%'"
-                    + "GROUP BY ra.id, ra.nimi, ra.mittayksikko");
+                    + "GROUP BY ra.id, ra.nimi, ra.mittayksikko, ra.kuvaus");
 
             prep.setString(1, hakutermi);
             ResultSet r = prep.executeQuery();
