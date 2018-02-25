@@ -18,16 +18,28 @@
 
                     <div>Raaka-aineen tiedot:</div>
 
-                    <ol>
-                        <li th:each="raaka_aine : ${raaka_aineet}">
-                            <h6 th:text="${raaka_aine.nimi}">Raaka-aine</h6>
-                            <span th:text="${raaka_aine.mittayksikko}">Mittayksikkö</span>
-                            <p th:text="${raaka_aine.kuvaus}">Kuvaus</p>
-                            Käytössä <p th:text="${raaka_aine.kaytossa}"/> reseptissä
-                            <form th:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
-                                <input type="submit" value="Poista"/>
-                            </form>
-                        </li>
-                    </ol>
+                    <table style="width:100%">
+                        <tr>
+                            <th>Raaka-aine</th>
+                            <th>Mittayksikkö</th> 
+                            <th>Kuvaus</th>
+                            <th>Käytössä</th>
+                            <th>Poista</th>
+                        </tr>
+                        <tr>
+                            <ul style="list-style-type:none">
+                                <li td:each="raaka_aine : ${raaka_aineet}">
+                                    <p td:text="${raaka_aine.nimi}"/>
+                                    <p td:text="${raaka_aine.mittayksikko}"/>
+                                    <p td:text="${raaka_aine.kuvaus}"/>
+                                    <p td:text="${raaka_aine.kaytossa}"/>
+                                    <form td:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
+                                        <input type="submit" value="Poista"/>
+                                    </form>
+                                </li>
+                            </ul>
+                        </tr>
+                    </table>
+                    
                 </body>
                 </html>
