@@ -98,7 +98,7 @@ public class Main {
             reseptit = annosDao.findAll();
             map.put("reseptit", reseptit);
 
-            return new ModelAndView(map, "resepti");
+            return new ModelAndView(map, "reseptit");
         }, new ThymeleafTemplateEngine());
 
         Spark.get("/annosraakaaine", (req, res) -> {
