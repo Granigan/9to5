@@ -19,20 +19,6 @@
                     <div>Raaka-aineen tiedot:</div>
 
 
-                    <ul>
-                        <li th:each="raaka_aine : ${raaka_aineet}">
-                            <span th:text="${raaka_aine.nimi}"/>
-                            <span th:text="${raaka_aine.mittayksikko}"/>
-                            <span th:text="${raaka_aine.kuvaus}"/>
-                            <span th:text="${raaka_aine.kaytossa}"/>
-                            <form th:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
-                                    <input type="submit" value="Poista"/>
-                            </form>
-                        </li>
-                    </ul>
-
-                    
-                    
                     <table style="width:100%">
                         <tr>
                             <th>Raaka-aine</th>
@@ -41,7 +27,22 @@
                             <th>Käytössä</th>
                             <th>Poista</th>
                         </tr>
-                            </tr>
+                    <ul>
+                        <li th:each="raaka_aine : ${raaka_aineet}">
+                        <tr>
+                            <td><span th:text="${raaka_aine.nimi}"/></td>
+                            <td><span th:text="${raaka_aine.mittayksikko}"/></td>
+                            <td><span th:text="${raaka_aine.kuvaus}"/></td>
+                            <td><span th:text="${raaka_aine.kaytossa}"/></td>
+                            <td><form th:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
+                                    <input type="submit" value="Poista"/>
+                            </form></td>
+                        </tr>
+                        </li>
+                    </ul>
+
+                    
+                    
                     </table>
                     
                 </body>
