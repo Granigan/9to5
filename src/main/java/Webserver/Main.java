@@ -176,12 +176,13 @@ public class Main {
             if (req.queryParams("end") != null) {
                 // TODO: Tallennus tietokantaan
                 
-                String nimi = nimiList.get(0);
-                nimi = req.queryParams("nimi");
+                //String nimi = nimiList.get(0);
+                String nimi = req.queryParams("resNimi");
                 nimiList.clear();
                 nimiList.add(" ");
                 
-                String kuvaus = kuvausList.get(0);
+                //String kuvaus = kuvausList.get(0);
+                String kuvaus = req.queryParams("resKuvaus");
                 kuvausList.clear();
                 kuvausList.add(" ");
                 
@@ -195,6 +196,22 @@ public class Main {
                                         List<Byte> l = new ArrayList();
                 byte g = 0;
                 l.add(g);
+                
+                for (int i = 0; i < reseptinCache.size(); i++) {
+                    AnnosRaakaaine r = reseptinCache.get(i);
+                    AnnosRaakaaine ar = new AnnosRaakaaine();
+                    ar.setAnnosId(currentAnnos.getId());
+                    ar.setRaakaaineId(r.getRaakaaineId());
+                    ar.setMaara(r.getMaara());
+                    ar.setJarjestys(i);
+
+                    try {
+                    annosaineDao.saveOrUpdate(ar);
+                    } catch (SQLException e) {
+                        System.out.println("Jokin meni pieleen reseptia tallennettaessa: " + e);
+                    }
+                   
+                }/*
                 reseptinCache.forEach(r -> {
                     AnnosRaakaaine ar = new AnnosRaakaaine();
                     ar.setAnnosId(currentAnnos.getId());
@@ -211,7 +228,7 @@ public class Main {
                             
                     //count++;
                 
-                });
+                });*/
 
                 reseptinCache.clear();
                 //reseptinCache = new ArrayList();
