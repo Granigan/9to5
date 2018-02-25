@@ -8,32 +8,21 @@
     </head>
     
     <body>
-        <h2>Valitsemasi resepti: kiehuva vesi</h2>
         <table style="width:100%">
-            <tr>
-                <th>Nimi</th>
-                <th>Valmistusohje</th>
-            </tr>
-            <ol style="list-style-type:none">
+            <ul style="list-style-type:none">
                 <li th:each="ARA : ${resepti}" style="list-style-type: none;">
                 <tr>
-                    <td><span th:text="${ARA.nimi}"/></td>
+                    <td>
+                        <h2>Valitsemasi resepti: <span th:text="${ARA.nimi}"/></h2>
+                    </td>
                     <td><span th:text="${ARA.valmistusohje}"/></td>
                 </tr>
                 </li>
+            </ul>
         </table>
         
         
         
-        
-        <h3>Valmistusohje:</h3>
-        <p>
-            Keitä vesi.<br>
-            Juo.<br>
-            Polta kurkkusi.
-            ????<br>
-            Profit.
-        </p>
         
         <div>
             <a href="/">Etusivu</a>
