@@ -164,10 +164,15 @@ public class Main {
                 
                 String nimi = nimiList.get(0);
                 nimiList.clear();
+                nimiList.add(" ");
+                
+                String kuvaus = kuvausList.get(0);
+                kuvausList.clear();
+                kuvausList.add(" ");
                 
                 Annos a = new Annos();
                 a.setNimi(nimi);
-                a.setValmistusohje(kuvausList.get(0));
+                a.setValmistusohje(kuvaus);
                 annosDao.saveOrUpdate(a);
                 //annosaineDao.saveOrUpdate();
                 
