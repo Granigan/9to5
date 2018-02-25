@@ -16,13 +16,24 @@
                 <th>Mittayksikkö</th>
                 <th>Lisäysohje</th>
             </tr>
+            <ol style="list-style-type:none">
+                <li th:each="ARA : ${resepti}" style="list-style-type: none;">
+                <tr>
+                    <td><span th:text=${ARA.nimi}"/></td>
+                    <td><span th:text=${ARA.maara}"/></td>
+                    <td><span th:text=${ARA.mittayksikko}"/></td>
+                    <td><span th:text=${ARA.lisaysohje}"/></td>
+                </tr>
+                </li>
         </table>
+        
+        
         <h3>Valmistusohje:</h3>
         <p>
-            Keitä vesi.
-            Juo.
+            Keitä vesi.<br>
+            Juo.<br>
             Polta kurkkusi.
-            ????
+            ????<br>
             Profit.
         </p>
     </body>
