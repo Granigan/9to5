@@ -18,19 +18,6 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
-        // Luodaan TestiDao herokun tietokannan testausta varten
-        TestiDao testi = new TestiDao();
-
-        // Tällä asetetaan testidaoon muutama testitieto aina palvelimen käynnistyessä.
-        // Tämäkin olemassa lähinnä testaamista ja valmistelua varten.
-        for (int i = 0; i < 10; i++) {
-            try {
-                testi.saveOne((int) (Math.random() * 1000));
-            } catch (Exception e) {
-
-            }
-        }
-
         RaakaaineDao raakaDao = new RaakaaineDao();
         raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
 
@@ -167,14 +154,6 @@ public class Main {
             }
             return " ";
         });
-
-        Spark.get("/int", (req, res) -> {
-            HashMap map = new HashMap<>();
-            List<Integer> intit = new ArrayList<>();
-            intit = testi.getAll();
-            map.put("intit", intit);
-            return new ModelAndView(map, "int");
-        }, new ThymeleafTemplateEngine());
 
         // "Catch-all" -reitti
         Spark.get("*", (req, res) -> {
