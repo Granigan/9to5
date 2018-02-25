@@ -35,8 +35,10 @@ public class Main {
         raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
 
         AnnosDao annosDao = new AnnosDao();
-        //annosDao.saveOrUpdate(new Annos(0, "jauhelihakeitto"));
-        System.out.println(annosDao.findOne("jauhelihakeitto"));
+        annosDao.saveOrUpdate(new Annos(-1, "jauhelihakeitto", "kiehauta vesi, lisää ainekset"));
+        System.out.println(annosDao.findByName("jauhelihakeitto"));
+        System.out.println(annosDao.findOne(new Annos(-2, "jauhelihakeitto", "")));
+        System.out.println("etsi kaikki:" + annosDao.findAll().toString());
 
         AnnosRaakaaineDao annosaineDao = new AnnosRaakaaineDao();
 
