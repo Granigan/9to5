@@ -13,20 +13,30 @@ and open the template in the editor.
     <body>
         <div>Uuden reseptin luomien</div>
 
+        <ol>
+            <li th:each="edellinen : ${edelliset}">
+                <span th:text="${edellinen.nimi}">Raaka-aine</span>
+                <span th:text="${edellinen.maara}">Mittayksikkö</span>
+                <p th:text="${edellinen.ohje}">Kuvaus</p>
+            </li>
+        </ol>
+
 
         <h2>Reseptin lisäys:</h2>
-        <form method="POST" action="resepti">
-           <!-- <ol>
-                <li th:each="raakaaine: ${raaka_aineet}" th:id="${raakaaineStat.index}">-->
-                    <select name="raakaaine">
-                        <option th:each="raakaaine: ${raaka_aineet}" th:text="${raakaaine.nimi}"></option>
-                    </select>
-                    <input type="text" name="maara" placeholder="määrä"></input>
-                    <input type="text" name="ohje" placeholder="Ohje"></input>
+        <form method="POST" action="raaka_ainereseptiin">
+            <!-- <ol>
+                 <li th:each="raakaaine: ${raaka_aineet}" th:id="${raakaaineStat.index}">-->
+            <select name="raakaaine">
+                <option th:each="raakaaine: ${raaka_aineet}" th:text="${raakaaine.nimi}"></option>
+            </select>
+            <input type="text" name="maara" placeholder="määrä"></input>
+            <input type="text" name="ohje" placeholder="Ohje"></input>
 
-              <!--  </li>
-            </ol> -->
-            <input type="submit"></input>
+            <!--  </li>
+          </ol> -->
+            <input type="submit" name="add" value="Lisää"></input>
+            <input type="submit" name="end" value="Valmis"></input>
         </form>
+
     </body>
 </html>

@@ -33,15 +33,13 @@ public class Main {
 
         RaakaaineDao raakaDao = new RaakaaineDao();
         raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
-        
-        
+
         AnnosDao annosDao = new AnnosDao();
         //annosDao.saveOrUpdate(new Annos(0, "jauhelihakeitto"));
         System.out.println(annosDao.findOne("jauhelihakeitto"));
-        
+
         AnnosRaakaaineDao annosaineDao = new AnnosRaakaaineDao();
-        
-        
+
         // Tämä asettaa herokun portin ympäristömuuttujan määräämäksi,
         // jos ympäristömuuttuja on olemassa. Herokua varten tärkeä!
         if (System.getenv("PORT") != null) {
@@ -73,7 +71,6 @@ public class Main {
             res.redirect("/");
             return " ";
         });*/
-
         // Tästä alkavat "oikeat" eli tuotantoreitit
         Spark.get("/raaka_aineet", (req, res) -> {
 
@@ -85,8 +82,6 @@ public class Main {
             return new ModelAndView(map, "raaka-aine");
         }, new ThymeleafTemplateEngine());
 
-        
-        
         Spark.post("/raaka_aineet", (req, res) -> {
             // Lisätään raaka-aine tietokantaan
 
@@ -117,7 +112,7 @@ public class Main {
             } else {
                 raakaDao.delete(nimi);
             }
-            */
+             */
             //return "<p>9to5 Corp has not implented this feature as of yet.</p>";
             // Lopuksi redirect, kun kaikki ominaisuudet luotu
             res.redirect("/raaka_aineet");
@@ -133,46 +128,67 @@ public class Main {
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
-        
+
         Spark.get("/annosraakaaine", (req, res) -> {
 
             HashMap map = new HashMap<>();
             List<Integer> ARs = new ArrayList<>();
             ARs = annosaineDao.findAll();
             // TODO: tähän annosraakaaineiden haku
-            
-            
+
             map.put("annosraakaaineet", ARs);
             return new ModelAndView(map, "annosraakaaine");
         }, new ThymeleafTemplateEngine());
-        
-        
+
         Spark.get("/lisaaresepti", (req, res) -> {
-            
+
             HashMap map = new HashMap<>();
             List<Raaka_aine> a = new ArrayList();
-            List<AnnosRaakaaine> b = new ArrayList();
-            
+            //List<AnnosRaakaaine> b = new ArrayList();
+
             a = raakaDao.findAll();
-            map.put("edelliset", b);
+            map.put("edelliset", reseptinCache);
             map.put("raaka_aineet", a);
             return new ModelAndView(map, "lisaaresepti");
         }, new ThymeleafTemplateEngine());
-        
-        
-        
-        Spark.post("/resepti", (req, res) -> {
-            
-            Set<String> s = req.queryParams();
+
+        Spark.post("/raaka_ainereseptiin", (req, res) -> {
+
+            //Set<String> s = req.queryParams();
             //System.out.println(req.body());
             System.out.println(req.queryParams("maara"));
             System.out.println(req.queryParams("raakaaine"));
             System.out.println(req.queryParams("ohje"));
-            
-            res.redirect("/reseptit");
+            System.out.println(req.queryParams("add"));
+            System.out.println(req.queryParams("end"));
+
+            if (req.queryParams("end") != null) {
+                // Tallennus tietokantaan
+                
+                
+                
+                
+            } else {
+                // reseptinCacheon tallentaminen
+                AnnosRaakaaine r = new AnnosRaakaaine();
+                r.setOhje(req.queryParams("ohje"));
+                r.setMaara(Integer.parseInt(req.queryParams("maara")));
+                Raaka_aine raak = new Raaka_aine();
+                // Väliaikainen raaka-aineolio etsintää varten
+                raak.setNimi(req.queryParams("raakaaine"));
+
+                // Type casting, koska RaakaaineDao palauttaa Object -olion
+                Raaka_aine realRaak = (Raaka_aine) (raakaDao.findOne(raak));
+
+                r.setRaakaaineId(realRaak.getId());
+
+                reseptinCache.add(r);
+                res.redirect("/lisaaresepti");
+            }
+
+            //res.redirect("/reseptit");
             return " ";
         });
-
 
         Spark.get("/int", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -182,8 +198,6 @@ public class Main {
             return new ModelAndView(map, "int");
         }, new ThymeleafTemplateEngine());
 
-        
-        
         // "Catch-all" -reitti
         Spark.get("*", (req, res) -> {
             HashMap map = new HashMap<>();
