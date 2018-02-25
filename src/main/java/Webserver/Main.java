@@ -121,7 +121,7 @@ public class Main {
             }
             map.put("resepti", annos);
             return new ModelAndView(map, "resepti");
-        });
+        }, new ThymeleafTemplateEngine());
 
         Spark.get("/annosraakaaine", (req, res) -> {
 
