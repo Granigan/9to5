@@ -39,6 +39,8 @@ public class Main {
 
         List<Raaka_aine> raakaaineet = new ArrayList<>();
         List<AnnosRaakaaine> reseptinCache = new ArrayList();
+        //char[] reseptinNimi;
+        List<String> nimiList = new ArrayList();
 
         /**
          *
@@ -133,6 +135,10 @@ public class Main {
 
             if (req.queryParams("end") != null) {
                 // TODO: Tallennus tietokantaan
+                //String name = String.valueOf(chars);
+                
+                
+                
 
                 res.redirect("/reseptit");
                 return " ";
@@ -148,6 +154,15 @@ public class Main {
                     // TODO jos ehtii: joku palaute käyttäjälle huonosta syötteestä
                     // TAI html-formiin jokin määräys syötteen muodosta
                     maara = 0;
+                }
+                //reseptinNimi = req.queryParams("resNimi").toCharArray();
+                //System.out.println(req.queryParams("resNimi"));
+                
+                //Nimi talteen:
+                String nimi = req.queryParams("resNimi");
+                if (nimi != null) {
+                    nimiList.clear();
+                    nimiList.add(nimi);
                 }
 
                 r.setMaara(maara);
