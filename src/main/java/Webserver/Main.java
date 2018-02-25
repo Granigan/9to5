@@ -30,7 +30,6 @@ public class Main {
         raakaDao.saveOrUpdate(new Raaka_aine(0, "jauheliha", "g", "jauheliha, toimii siinä missä soijarouhekin"));
         AnnosRaakaaineDao annosaineDao = new AnnosRaakaaineDao();
         //Integer annosid, Integer raakaaineid, Integer jarjestys, Integer maara, String ohje)
-        //ArrayList<Raaka_aine> jauhelihat = (ArrayList)raakaDao.findByNameCaseIns("jauheliha");
         //annosaineDao.saveOrUpdate(new AnnosRaakaaine(keitto.getId(), jauhelihat.get(0).getId(), 1, 400, "Paista ja lisää liemeen"));
 
         // Tämä asettaa herokun portin ympäristömuuttujan määräämäksi,
