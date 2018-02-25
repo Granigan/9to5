@@ -42,8 +42,10 @@ public class Main {
         
         //Säilyttää nimen ja kuvauksen
         List<String> nimiList = new ArrayList();
+        nimiList.add(" ");
         List<String> kuvausList = new ArrayList();
-
+        kuvausList.add(" ");
+        
         /**
          *
          * R E I T I T
