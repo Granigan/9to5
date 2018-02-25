@@ -24,7 +24,7 @@ public class RaakaaineDao implements Dao {
                     + ");");
             createTable.executeUpdate();
             createTable.close();
-            System.out.println("Luotiin taulu Raakaaine");
+            System.out.println("Luotiin taulu Raakaaine, jos sitä ei ollut");
 
         } catch (Exception e) {
             System.out.println("ongelma luodessa raakaaine-taulua: " + e.getMessage());
@@ -36,7 +36,7 @@ public class RaakaaineDao implements Dao {
                     + "ON Raakaaine (id);");
             createIndexAineId.executeUpdate();
             createIndexAineId.close();
-            System.out.println("Luotiin indeksi taululle Raakaaine");
+            System.out.println("Luotiin indeksi taululle Raakaaine, jos sitä ei ollut");
         } catch (Exception e) {
             System.out.println("ongelma luodessa raakaaine-taulun indeksiä: " + e.getMessage());
         }
@@ -47,7 +47,7 @@ public class RaakaaineDao implements Dao {
                     + "ON Raakaaine ((lower(nimi)));");
             createIndexAineNimi.executeUpdate();
             createIndexAineNimi.close();
-            System.out.println("Luotiin indeksi taululle Raakaaine");
+            System.out.println("Luotiin indeksi taululle Raakaaine, jos sitä ei ollut");
         } catch (Exception e) {
             System.out.println("ongelma luodessa raakaaine-taulun indeksiä: " + e.getMessage());
         }
@@ -93,7 +93,7 @@ public class RaakaaineDao implements Dao {
 
             Connection con = getConnection();
             PreparedStatement prep = con.prepareStatement("SELECT "
-                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.ra.id) AS kaytossa"
+                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.ra.id) AS kaytossa "
                     + "FROM Raakaaine ra LEFT OUTER JOIN AnnosRaakaaine ara "
                     + "ON ra.id = ara.raakaaine_id "
                     + "GROUP BY ra.id, ra.nimi, ra.mittayksikko");
@@ -124,7 +124,7 @@ public class RaakaaineDao implements Dao {
 
             Connection con = getConnection();
             PreparedStatement prep = con.prepareStatement("SELECT "
-                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.ra.id) AS kaytossa"
+                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.ra.id) AS kaytossa "
                     + "FROM Raakaaine ra LEFT OUTER JOIN AnnosRaakaaine ara "
                     + "ON ra.id = ara.raakaaine_id "
                     + "WHERE ra.nimi like '%?%'"
