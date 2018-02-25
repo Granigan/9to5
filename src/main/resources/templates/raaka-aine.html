@@ -18,6 +18,20 @@
 
                     <div>Raaka-aineen tiedot:</div>
 
+                    <ul>
+                        <li th:each="raaka_aine : ${raaka_aineet}">
+                            <span td:text="${raaka_aine.nimi}">Raaka-aine</span>
+                            <span td:text="${raaka_aine.mittayksikko}"/>
+                            <span td:text="${raaka_aine.kuvaus}"/>
+                            <span td:text="${raaka_aine.kaytossa}"/>
+                            <form td:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
+                                    <input type="submit" value="Poista"/>
+                            </form>
+                        </li>
+                    </ul>
+
+                    
+                    
                     <table style="width:100%">
                         <tr>
                             <th>Raaka-aine</th>
@@ -26,21 +40,7 @@
                             <th>Käytössä</th>
                             <th>Poista</th>
                         </tr>
-                        <tr>
-                            <ul style="list-style-type:none">
-                                <li td:each="raaka_aine : ${raaka_aineet}">
-                                    <td text="${raaka_aine.nimi}"/>
-                                    <td text="${raaka_aine.mittayksikko}"/>
-                                    <td text="${raaka_aine.kuvaus}"/>
-                                    <td text="${raaka_aine.kaytossa}"/>
-                                    <td>
-                                    <form action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
-                                        <input type="submit" value="Poista"/>
-                                    </form>
-                                    </td>
-                                </li>
-                            </ul>
-                        </tr>
+                            </tr>
                     </table>
                     
                 </body>
