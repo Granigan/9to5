@@ -94,11 +94,11 @@ public class Main {
         Spark.get("/reseptit", (req, res) -> {
 
             HashMap map = new HashMap<>();
+            List<Annos> reseptit = new ArrayList<>();
+            reseptit = annosDao.findAll();
+            map.put("reseptit", reseptit);
 
-            // TODO: EI TOTEUTETTU
-            map.put("raaka_aineet", raakaaineet);
-
-            return new ModelAndView(map, "index");
+            return new ModelAndView(map, "resepti");
         }, new ThymeleafTemplateEngine());
 
         Spark.get("/annosraakaaine", (req, res) -> {

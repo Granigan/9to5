@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Raaka-aine</title>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body>
+
+                    <h2>Reseptit:</h2>
+<!--
+                    <form method="POST" action="raaka_aineet">
+                        <input type="text" name="nimi" placeholder="Raaka-aineen nimi" />
+                        <input type="text" name="kuvaus" placeholder="kuvaus" />
+                        <input type="text" name="mittayksikko" placeholder="mittayksikkö" />
+                        <input type="submit" value="Tallenna"/>
+                    </form>
+-->
+
+                    <table style="width:100%">
+                        <tr>
+                            <th>Nimi</th>
+                            <th>Poista</th>
+                        </tr>
+                    <ul style="list-style-type:none">
+                        <li th:each="resepti : ${reseptit}" style="list-style-type: none;">
+                        <tr>
+                            <td><span th:text="${resepti.nimi}"/></td>
+                            <td><form th:action="@{~/reseptit/delete/{id}(id=${resepti.getId()})}" method="POST">
+                                    <input type="submit" value="Poista"/>
+                            </form></td>
+                        </tr>
+                        </li>
+                    </ul>
+
+                    
+                    
+                    </table>
+                    
+                </body>
+                </html>

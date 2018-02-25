@@ -1,6 +1,6 @@
 package Webserver;
 
-//import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class Annos {
 
@@ -8,13 +8,15 @@ public class Annos {
     private String nimi;
     private String valmistusohje;
 //    private ArrayList<Raaka_aine> AnnosRaakaAineLista;  kommentoin ulos, näitä ei kait tarvita täällä? -tt
+    private ArrayList<Raaka_aine> AnnosRaakaAineLista;
+    // Nää tarvitaan just siksi, että objektissa olisi kaikki annoksen tiedot
+    // Niin ei tarvitse erikseen mitään HashMappeja
 
     public Annos(int id, String nimi, String valmistusohje) {
         this.id = id;
         this.nimi = nimi;
         this.valmistusohje = valmistusohje;
-//        ArrayList<Object> raakaAineLista;
-//        this.AnnosRaakaAineLista = new ArrayList<>();
+        this.AnnosRaakaAineLista = new ArrayList<>();
     }
 
     public int getId() {
@@ -40,5 +42,5 @@ public class Annos {
     public String getValmistusohje() {
         return valmistusohje;
     }
-
+    
 }
