@@ -183,7 +183,7 @@ public class Main {
                 //Nimi talteen:
                 String nimi = req.queryParams("resNimi");
                 if (nimi != null) {
-                    nimiList.clear()
+                    nimiList.clear();
                     nimiList.add(0, nimi);
                 }
 
