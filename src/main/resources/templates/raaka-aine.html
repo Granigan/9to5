@@ -13,14 +13,8 @@
                         <input type="text" name="nimi" placeholder="Raaka-aineen nimi" />
                         <input type="text" name="kuvaus" placeholder="kuvaus" />
                         <input type="text" name="mittayksikko" placeholder="mittayksikkö" />
-                        <input type="submit">Tallenna raaka-aine</input>
+                        <input type="submit" value="Tallenna"/>
                     </form>
-                    <h2>Raaka-aineen poisto:</h2>
-                    <form action="/raaka_aineet/delete" method="POST">
-                        <input type="text" name="raaka_aine" placeholder="Raaka-aineen nimi"/>
-                        <input type="submit"/>
-                    </form>
-
 
                     <div>Raaka-aineen tiedot:</div>
 
@@ -29,6 +23,7 @@
                             <h6 th:text="${raaka_aine.nimi}">Raaka-aine</h6>
                             <span th:text="${raaka_aine.mittayksikko}">Mittayksikkö</span>
                             <p th:text="${raaka_aine.kuvaus}">Kuvaus</p>
+                            <p th:text="Käytössä ${raaka_aine.kaytossa} reseptissä"/>
                             <form th:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
                                 <input type="submit" value="Poista"/>
                             </form>
