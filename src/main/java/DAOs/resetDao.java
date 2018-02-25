@@ -15,6 +15,7 @@ public class resetDao {
         dropOld = con.prepareStatement("DROP TABLE Raakaaine CASCADE");
         dropOld.executeUpdate();
         dropOld.close();
+        con.close();
     }
 
 }

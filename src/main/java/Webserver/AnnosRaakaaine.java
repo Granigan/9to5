@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Webserver;
 
 /**
@@ -16,6 +12,7 @@ public class AnnosRaakaaine {
     private Integer jarjestys;
     private Integer maara;
     private String ohje;
+    private String raakaaineenNimi;
 
     
     public AnnosRaakaaine() {
@@ -69,6 +66,14 @@ public class AnnosRaakaaine {
 
     public void setOhje(String ohje) {
         this.ohje = ohje;
+    }
+    
+    public void setRaakaaineenNimi(String nimi) {
+        this.raakaaineenNimi = nimi;
+    }
+    
+    public String getRaakaaineenNimi() {
+        return this.raakaaineenNimi;
     }
     
 }
