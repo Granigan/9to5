@@ -106,6 +106,22 @@ public class Main {
             return new ModelAndView(map, "reseptit");
         }, new ThymeleafTemplateEngine());
 
+        Spark.post("/resepti/:id", (req, res) -> {
+
+            HashMap map = new HashMap<>();
+            String id = req.params(":id");
+            Annos annos = new Annos();
+            try {
+                annos = (Annos)annosDao.findById(Integer.parseInt(id));
+            } catch (Exception e) {
+                System.out.println("Reseptin haku: Yritettiin muuntaa id integeriksi siinä onnistumatta");
+            }
+            map.put("resepti", annos);
+
+            res.redirect("/resepti");
+            return " ";
+        });
+
         Spark.get("/annosraakaaine", (req, res) -> {
 
             HashMap map = new HashMap<>();

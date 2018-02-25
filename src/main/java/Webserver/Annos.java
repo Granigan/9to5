@@ -13,6 +13,10 @@ public class Annos {
     // Nää tarvitaan just siksi, että objektissa olisi kaikki annoksen tiedot
     // Niin ei tarvitse erikseen mitään HashMappeja
 
+    public Annos() {
+        this.AnnosRaakaAineLista = new ArrayList<>();
+    }
+
     public Annos(int id, String nimi, String valmistusohje) {
         this.id = id;
         this.nimi = nimi;
