@@ -31,12 +31,15 @@ and open the template in the editor.
             </select>
             <input type="number" min="0" name="maara" placeholder="määrä" ></input>
             <input type="text" name="ohje" placeholder="Ohje"></input>
+            
+            <p> </p>
             <input th:text="${resNimi}" type="text" name="resNimi" placeholder="Reseptin nimi" ></input>
             <input th:text="${resKuvaus}" placeholder="reseptin kuvaus"></input>
 <!--th:text="${resNimi}"-->
             <!--th:text="${resKuvaus}"-->
             <!--  </li>
           </ol> -->
+            
             <input type="submit" name="add" value="Lisää"></input>
             <input type="submit" name="end" value="Valmis"></input>
         </form>
