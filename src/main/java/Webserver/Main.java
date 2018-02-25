@@ -112,7 +112,10 @@ public class Main {
             String id = req.params(":id");
             Annos annos = new Annos();
             try {
-                annos = (Annos)annosDao.findById(Integer.parseInt(id));
+                annos = (Annos) annosDao.findById(Integer.parseInt(id));
+                List<AnnosRaakaaine> aineet = new ArrayList<>();
+                aineet.addAll(annosaineDao.findAll(annos.getId()));
+                annos.setRaakaaineet(aineet);
             } catch (Exception e) {
                 System.out.println("Reseptin haku: Yritettiin muuntaa id integeriksi siinä onnistumatta");
             }

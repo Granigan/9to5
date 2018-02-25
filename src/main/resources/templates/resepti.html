@@ -11,18 +11,14 @@
         <h2>Valitsemasi resepti: kiehuva vesi</h2>
         <table style="width:100%">
             <tr>
-                <th>Raaka-aine</th>
-                <th>Määrä</th>
-                <th>Mittayksikkö</th>
-                <th>Lisäysohje</th>
+                <th>Nimi</th>
+                <th>Valmistusohje</th>
             </tr>
             <ol style="list-style-type:none">
                 <li th:each="ARA : ${resepti}" style="list-style-type: none;">
                 <tr>
                     <td><span th:text=${ARA.nimi}"/></td>
-                    <td><span th:text=${ARA.maara}"/></td>
-                    <td><span th:text=${ARA.mittayksikko}"/></td>
-                    <td><span th:text=${ARA.lisaysohje}"/></td>
+                    <td><span th:text=${ARA.valmistusohje}"/></td>
                 </tr>
                 </li>
         </table>
