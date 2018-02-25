@@ -186,7 +186,7 @@ public class Main {
                 //Nimi talteen:
                 String nimi = req.queryParams("resNimi");
                 if (nimi != null) {
-                    reseptiList.get(0) = null;
+                    //reseptiList. .get(0) = null;
                     reseptiList.add(0, nimi);
                 }
 
