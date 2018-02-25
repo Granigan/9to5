@@ -116,7 +116,7 @@ public class AnnosDao implements Dao {
     }
 
     @Override
-    public Object findOne(Object key) throws SQLException {
+    public Annos findOne(Object key) throws SQLException {
         Annos etsittava = (Annos) key;
         Annos osuma = null;
         Connection con = getConnection();
