@@ -18,14 +18,14 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
+        RaakaaineDao raakaDao = new RaakaaineDao();
+        raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
+
         AnnosDao annosDao = new AnnosDao();
         annosDao.saveOrUpdate(new Annos(-1, "jauhelihakeitto", "kiehauta vesi, lisää ainekset"));
         System.out.println(annosDao.findByName("jauhelihakeitto"));
         System.out.println(annosDao.findOne(new Annos(-2, "jauhelihakeitto", "")));
         System.out.println("etsi kaikki:" + annosDao.findAll().toString());
-
-        RaakaaineDao raakaDao = new RaakaaineDao();
-        raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
 
         AnnosRaakaaineDao annosaineDao = new AnnosRaakaaineDao();
 
