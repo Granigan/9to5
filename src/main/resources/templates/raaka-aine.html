@@ -18,13 +18,14 @@
 
                     <div>Raaka-aineen tiedot:</div>
 
+
                     <ul>
                         <li th:each="raaka_aine : ${raaka_aineet}">
-                            <span td:text="${raaka_aine.nimi}">Raaka-aine</span>
-                            <span td:text="${raaka_aine.mittayksikko}"/>
-                            <span td:text="${raaka_aine.kuvaus}"/>
-                            <span td:text="${raaka_aine.kaytossa}"/>
-                            <form td:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
+                            <span th:text="${raaka_aine.nimi}"/>
+                            <span th:text="${raaka_aine.mittayksikko}"/>
+                            <span th:text="${raaka_aine.kuvaus}"/>
+                            <span th:text="${raaka_aine.kaytossa}"/>
+                            <form th:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
                                     <input type="submit" value="Poista"/>
                             </form>
                         </li>
