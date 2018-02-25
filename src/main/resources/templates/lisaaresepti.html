@@ -21,15 +21,15 @@ and open the template in the editor.
             <select name="raakaaine">
                 <option th:each="raakaaine: ${raaka_aineet}" th:text="${raakaaine.nimi}"></option>
             </select>
-            <input type="number" min="0" name="maara" placeholder="Määrä" ></input>
-            <input type="text" name="ohje" placeholder="Lisäysohje"></input>
+            <input type="number" min="0" name="maara" placeholder="Määrä" required></input>
+            <input type="text" name="ohje" placeholder="Lisäysohje" required></input>
             <input type="submit" name="add" value="Lisää reseptiin"></input>
 
 	<br>
 
         <ol>
             <li th:each="edellinen : ${edelliset}">
-                <span th:text="${edellinen.getRaakaaineenNimi}">Raaka-aine</span>
+                <span th:text="${edellinen.getRaakaaineenNimi}" required>Raaka-aine</span>
                 <span th:text="${edellinen.maara}">Mittayksikkö</span>
                 <p th:text="${edellinen.ohje}">Kuvaus</p>
             </li>
