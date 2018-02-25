@@ -172,7 +172,16 @@ public class Main {
                 // reseptinCacheon tallentaminen
                 AnnosRaakaaine r = new AnnosRaakaaine();
                 r.setOhje(req.queryParams("ohje"));
-                r.setMaara(Integer.parseInt(req.queryParams("maara")));
+                int maara = 0;
+                try {
+                    Integer.parseInt(req.queryParams("maara"));
+                } catch (NumberFormatException e) {
+                    // TODO jos ehtii: joku palaute käyttäjälle huonosta syötteestä
+                    // TAI html-formiin jokin määräys syötteen muodosta
+                    maara = 0;
+                }
+                
+                r.setMaara(maara);
                 Raaka_aine raak = new Raaka_aine();
                 // Väliaikainen raaka-aineolio etsintää varten
                 raak.setNimi(req.queryParams("raakaaine"));
