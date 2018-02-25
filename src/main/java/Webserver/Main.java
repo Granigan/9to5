@@ -54,7 +54,6 @@ public class Main {
          *
          * R E I T I T
          *
-         *
          */
         // Tästä alkavat "oikeat" eli tuotantoreitit
         Spark.get("/raaka_aineet", (req, res) -> {
@@ -190,13 +189,10 @@ public class Main {
                 a.setNimi(nimi);
                 a.setValmistusohje(kuvaus);
                 annosDao.saveOrUpdate(a);
-                //annosaineDao.saveOrUpdate();
                 
                 Annos currentAnnos = annosDao.findOne(a);
                 
-                        
-                        //(Annos) (annosDao.findOne(a
-                List<Byte> l = new ArrayList();
+                                        List<Byte> l = new ArrayList();
                 byte g = 0;
                 l.add(g);
                 
