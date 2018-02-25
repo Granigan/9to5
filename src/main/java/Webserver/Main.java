@@ -177,6 +177,7 @@ public class Main {
                 // TODO: Tallennus tietokantaan
                 
                 String nimi = nimiList.get(0);
+                nimi = req.queryParams("nimi");
                 nimiList.clear();
                 nimiList.add(" ");
                 
