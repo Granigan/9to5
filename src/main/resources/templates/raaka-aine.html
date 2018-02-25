@@ -29,13 +29,15 @@
                         <tr>
                             <ul style="list-style-type:none">
                                 <li td:each="raaka_aine : ${raaka_aineet}">
-                                    <p td:text="${raaka_aine.nimi}"/>
-                                    <p td:text="${raaka_aine.mittayksikko}"/>
-                                    <p td:text="${raaka_aine.kuvaus}"/>
-                                    <p td:text="${raaka_aine.kaytossa}"/>
-                                    <form td:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
+                                    <td text="${raaka_aine.nimi}"/>
+                                    <td text="${raaka_aine.mittayksikko}"/>
+                                    <td text="${raaka_aine.kuvaus}"/>
+                                    <td text="${raaka_aine.kaytossa}"/>
+                                    <td>
+                                    <form action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
                                         <input type="submit" value="Poista"/>
                                     </form>
+                                    </td>
                                 </li>
                             </ul>
                         </tr>
