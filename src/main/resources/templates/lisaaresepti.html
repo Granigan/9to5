@@ -29,9 +29,10 @@ and open the template in the editor.
             <select name="raakaaine">
                 <option th:each="raakaaine: ${raaka_aineet}" th:text="${raakaaine.nimi}"></option>
             </select>
-            <input type="number" min="0" name="maara" placeholder="määrä"></input>
+            <input type="number" min="0" name="maara" placeholder="määrä" required></input>
             <input type="text" name="ohje" placeholder="Ohje"></input>
-            <input th:text="${resNimi}" type="text" name="resNimi" placeholder="Reseptin nimi"></input>
+            <input th:text="${resNimi}" type="text" name="resNimi" placeholder="Reseptin nimi" required></input
+            <input th:text="${resKuvaus}" placeholder="reseptin kuvaus" required></input>
 
             <!--  </li>
           </ol> -->
