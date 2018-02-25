@@ -6,16 +6,13 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 </head>
                 <body>
+                <div>
+                    <a href="/">Etusivu</a>
+                    <a href="/lisaaresepti">Lisää uusi resepti</a>
+                    <a href="/raaka_aineet">Lisää tai päivitä raaka-aineita</a>
+                </div>
 
                     <h2>Reseptit:</h2>
-                    <!--
-                                        <form method="POST" action="raaka_aineet">
-                                            <input type="text" name="nimi" placeholder="Raaka-aineen nimi" />
-                                            <input type="text" name="kuvaus" placeholder="kuvaus" />
-                                            <input type="text" name="mittayksikko" placeholder="mittayksikkö" />
-                                            <input type="submit" value="Tallenna"/>
-                                        </form>
-                    -->
 
                     <table style="width:100%">
                         <tr>
@@ -27,11 +24,11 @@
                         <ul style="list-style-type:none">
                             <li th:each="resepti : ${reseptit}" style="list-style-type: none;">
                                 <tr>
-                                    <td><span th:text="${resepti.nimi}"/></td>
-                                    <td><span th:text="${resepti.getRaakaaineLkm()}"/></td>
                                     <td><form th:action="@{~/resepti/{id}(id=${resepti.getId()})}" method="POST">
                                             <input type="submit" value="Näytä"/>
-                                        </form></td>
+                                        </form></td>                                    <td><span th:text="${resepti.nimi}"/></td>
+                                    <td><span th:text="${resepti.getRaakaaineLkm()}"/></td>
+
                                     <td><form th:action="@{~/reseptit/delete/{id}(id=${resepti.getId()})}" method="POST">
                                             <input type="submit" value="Poista"/>
                                         </form></td>
@@ -44,9 +41,4 @@
                     </table>
 
                 </body>
-                <div>
-                    <a href="/">Etusivu</a>
-                    <a href="/lisaaresepti">Lisää uusi resepti</a>
-                    <a href="/raaka_aineet">Lisää tai päivitä raaka-aineita</a>
-                </div>
                 </html>
