@@ -135,5 +135,24 @@ public class AnnosDao implements Dao {
         return osuma;
 
     }
+    
+    public Object findById(int annosId) throws SQLException {
+        Annos osuma = null;
+        Connection con = getConnection();
+        PreparedStatement etsiYksi = con.prepareStatement("SELECT * FROM Annos WHERE id = ?");
+        etsiYksi.setInt(1, annosId);
+        ResultSet rs = etsiYksi.executeQuery();
+
+        if (rs.next()) {
+            osuma = new Annos(rs.getInt("id"), rs.getString("nimi"), rs.getString("valmistusohje"));
+        }
+
+        rs.close();
+        etsiYksi.close();
+        con.close();
+
+        return osuma;
+
+    }
 
 }
