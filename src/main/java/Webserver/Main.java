@@ -96,6 +96,10 @@ public class Main {
             HashMap map = new HashMap<>();
             List<Annos> reseptit = new ArrayList<>();
             reseptit = annosDao.findAll();
+            for (Annos annos : reseptit) {
+               List<AnnosRaakaaine> aineet = new ArrayList<>();
+               aineet.addAll(annosaineDao.findAll(annos.getId()));
+            }
             map.put("reseptit", reseptit);
 
             return new ModelAndView(map, "reseptit");

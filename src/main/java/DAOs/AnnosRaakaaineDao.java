@@ -122,6 +122,34 @@ public class AnnosRaakaaineDao implements Dao {
         }
     }
 
+    public List findAll(int annosId) throws SQLException {
+
+        List<AnnosRaakaaine> ret = new ArrayList<>();
+
+        try {
+
+            Connection con = getConnection();
+            PreparedStatement prep = con.prepareStatement(""
+                    + "SELECT * FROM AnnosRaakaaine WHERE annos_id = ? ORDER BY jarjestys");
+
+            prep.setInt(1, annosId);
+            ResultSet r = prep.executeQuery();
+
+            while (r.next()) {
+                ret.add(populoi(r));
+            }
+
+            r.close();
+            prep.close();
+            con.close();
+
+            return ret;
+        } catch (Exception e) {
+            System.out.println("Ongelma AnnosRaakaaine findAll-metodissa: " + e);
+            return null;
+        }
+    }
+
     private AnnosRaakaaine populoi(ResultSet r) throws SQLException {
         AnnosRaakaaine annRaak = new AnnosRaakaaine();
         annRaak.setAnnosId(r.getInt("annos_id"));
