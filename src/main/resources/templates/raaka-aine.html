@@ -29,22 +29,27 @@
                         </tr>
 
                         <ul style="list-style-type:none">
-                        <li th:each="raaka_aine : ${raaka_aineet}" style="list-style-type: none;">
-                        <tr>
-                            <td><span th:text="${raaka_aine.nimi}"/></td>
-                            <td><span th:text="${raaka_aine.mittayksikko}"/></td>
-                            <td><span th:text="${raaka_aine.kuvaus}"/></td>
-                            <td><span th:text="${raaka_aine.kaytossa}"/></td>
-                            <td><form th:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.getId()})}" method="POST">
-                                    <input type="submit" value="Poista"/>
-                            </form></td>
-                        </tr>
-                        </li>
-                    </ul>
+                            <li th:each="raaka_aine : ${raaka_aineet}" style="list-style-type: none;">
+                                <tr>
+                                    <td><span th:text="${raaka_aine.nimi}"/></td>
+                                    <td><span th:text="${raaka_aine.mittayksikko}"/></td>
+                                    <td><span th:text="${raaka_aine.kuvaus}"/></td>
+                                    <td><span th:text="${raaka_aine.kaytossa}"/></td>
+                                    <td><form th:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.getId()})}" method="POST">
+                                            <input type="submit" value="Poista"/>
+                                        </form></td>
+                                </tr>
+                            </li>
+                        </ul>
 
-                    
-                    
+
+
                     </table>
-                    
+                    <div>
+                        <a href="/reseptit">Katsele reseptejä</a>
+                        <a href="/lisaaresepti">Lisää uusi resepti</a>
+                        <a href="/raaka_aineet">Lisää tai päivitä raaka-aineita</a>
+
+                    </div>
                 </body>
                 </html>
