@@ -41,8 +41,11 @@ public class Main {
         List<AnnosRaakaaine> reseptinCache = new ArrayList();
         
         //Säilyttää nimen ja kuvauksen
-        List<String> reseptiList = new ArrayList();
-
+        List<String> nimiList = new ArrayList();
+        nimiList.add(" ");
+        List<String> kuvausList = new ArrayList();
+        kuvausList.add(" ");
+        
         /**
          *
          * R E I T I T
@@ -145,8 +148,8 @@ public class Main {
 
             a = raakaDao.findAll();
             map.put("edelliset", reseptinCache);
-            map.put("resNimi", reseptiList.get(0));
-            map.put("resKuvaus", reseptiList.get(1));
+            map.put("resNimi", nimiList.get(0));
+            map.put("resKuvaus", kuvausList.get(0));
             map.put("raaka_aineet", a);
             return new ModelAndView(map, "lisaaresepti");
         }, new ThymeleafTemplateEngine());
@@ -156,8 +159,8 @@ public class Main {
             if (req.queryParams("end") != null) {
                 // TODO: Tallennus tietokantaan
                 
-                String nimi = reseptiList.get(0);
-                //reseptiList. clear();
+                String nimi = nimiList.get(0);
+                nimiList.clear();
                 
                 Annos a = new Annos();
                 a.setNimi(nimi);
@@ -177,18 +180,14 @@ public class Main {
                 try {
                     maara = Integer.parseInt(req.queryParams("maara"));
                 } catch (NumberFormatException e) {
-                    // TODO jos ehtii: joku palaute käyttäjälle huonosta syötteestä
-                    // TAI html-formiin jokin määräys syötteen muodosta
                     maara = 0;
                 }
-                //reseptinNimi = req.queryParams("resNimi").toCharArray();
-                //System.out.println(req.queryParams("resNimi"));
                 
                 //Nimi talteen:
                 String nimi = req.queryParams("resNimi");
                 if (nimi != null) {
-                    //reseptiList. .get(0) = null;
-                    reseptiList.add(0, nimi);
+                    nimiList.clear();
+                    nimiList.add(0, nimi);
                 }
 
                 r.setMaara(maara);
