@@ -48,15 +48,8 @@ public class Main {
 
         System.out.println("Server starting.");
 
-        // TODO: Database-yhteyden luominen
         List<Raaka_aine> raakaaineet = new ArrayList<>();
         List<AnnosRaakaaine> reseptinCache = new ArrayList();
-        /*
-        raakaaineet.add(new Raaka_aine("Banaani"));
-        raakaaineet.add(new Raaka_aine("suola"));
-        raakaaineet.add(new Raaka_aine("suoli"));
-        raakaaineet.add(new Raaka_aine("suole"));
-         */
 
         /**
          *
@@ -64,13 +57,7 @@ public class Main {
          *
          *
          */
-        // herokun postgresql:n testaamista varten.
-        /*
-        Spark.get("/testi", (req, res) -> {
-            testi.saveOne((int) (Math.random() * 1000));
-            res.redirect("/");
-            return " ";
-        });*/
+        
         // Tästä alkavat "oikeat" eli tuotantoreitit
         Spark.get("/raaka_aineet", (req, res) -> {
 
@@ -105,16 +92,7 @@ public class Main {
             } catch (Exception e) {
                 System.out.println("Raaka-aineen delete: Yritettiin muuntaa id integeriksi siinä onnistumatta");
             }
-            /*
-             TODO: 
-            if (annosaineDao.isUsed(nimi)) {
-                // Tähän se mitä tehdään jos raaka-aine on käytössä
-            } else {
-                raakaDao.delete(nimi);
-            }
-             */
-            //return "<p>9to5 Corp has not implented this feature as of yet.</p>";
-            // Lopuksi redirect, kun kaikki ominaisuudet luotu
+            
             res.redirect("/raaka_aineet");
             return " ";
         });
@@ -154,22 +132,15 @@ public class Main {
 
         Spark.post("/raaka_ainereseptiin", (req, res) -> {
 
-            //Set<String> s = req.queryParams();
-            //System.out.println(req.body());
-            System.out.println(req.queryParams("maara"));
-            System.out.println(req.queryParams("raakaaine"));
-            System.out.println(req.queryParams("ohje"));
-            System.out.println(req.queryParams("add"));
-            System.out.println(req.queryParams("end"));
-
             if (req.queryParams("end") != null) {
-                // Tallennus tietokantaan
+                // TODO: Tallennus tietokantaan
                 
                 
-                
+                res.redirect("/reseptit");
+                return " ";
                 
             } else {
-                // reseptinCacheon tallentaminen
+                // reseptinCache:een tallentaminen
                 AnnosRaakaaine r = new AnnosRaakaaine();
                 r.setOhje(req.queryParams("ohje"));
                 int maara = 0;
@@ -194,8 +165,6 @@ public class Main {
                 reseptinCache.add(r);
                 res.redirect("/lisaaresepti");
             }
-
-            //res.redirect("/reseptit");
             return " ";
         });
 
