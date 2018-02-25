@@ -25,20 +25,21 @@ and open the template in the editor.
             <input type="text" name="ohje" placeholder="Lisäysohje" required></input>
             <input type="submit" name="add" value="Lisää reseptiin"></input>
 
-	<br>
+            <br>
 
-        <ol>
-            <li th:each="edellinen : ${edelliset}">
-                <span th:text="${edellinen.getRaakaaineenNimi}" required>Raaka-aine</span>
-                <span th:text="${edellinen.maara}">Mittayksikkö</span>
-                <p th:text="${edellinen.ohje}">Kuvaus</p>
-            </li>
-        </ol>
-
-	<br>
-	<p>Kun olet lisännyt kaikki raaka-aineet, kirjoita alle reseptin nimi ja kattava valmistusohje. Lopuksi paina Valmis lisätäksesi reseptin tietokantaan.
-	</p>
-	<br>
+            <ol>
+                <li th:each="edellinen : ${edelliset}">
+                    <span th:text="${edellinen.getRaakaaineenNimi}" required>Raaka-aine</span>
+                    <span th:text="${edellinen.maara}">Mittayksikkö</span>
+                    <p th:text="${edellinen.ohje}">Kuvaus</p>
+                </li>
+            </ol>
+        </form>
+        <br>
+        <p>Kun olet lisännyt kaikki raaka-aineet, kirjoita alle reseptin nimi ja kattava valmistusohje. Lopuksi paina Valmis lisätäksesi reseptin tietokantaan.
+        </p>
+        <br>
+        <form method="POST" action="raaka_ainereseptiin">
             <input th:text="${resNimi}" type="text" name="resNimi" placeholder="Reseptin nimi" ></input>
             <input th:textfield="${resKuvaus}" placeholder="Valmistusohje"></input>
             <!--th:text="${resNimi}"-->
@@ -49,8 +50,8 @@ and open the template in the editor.
 
             <input type="submit" name="end" value="Valmis"></input>
         </form>
-	<br>
-	<br>
+        <br>
+        <br>
         <div>
             <a href="/">Etusivu</a>
             <a href="/reseptit">Katsele reseptejä</a>
