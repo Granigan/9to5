@@ -115,6 +115,17 @@ public class AnnosDao implements Dao {
         con.close();
     }
 
+    public void delete(int annosId, AnnosRaakaaineDao ARADao) throws SQLException {
+
+        ARADao.deleteAll(annosId);
+
+        Connection con = getConnection();
+        PreparedStatement poista = con.prepareStatement("DELETE FROM Annos WHERE id = ?");
+        poista.setInt(1, annosId);
+        poista.executeUpdate();
+        poista.close();
+        con.close();
+    }
     @Override
     public Annos findOne(Object key) throws SQLException {
         Annos etsittava = (Annos) key;
