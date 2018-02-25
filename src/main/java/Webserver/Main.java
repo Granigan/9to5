@@ -164,6 +164,7 @@ public class Main {
                 
                 Annos a = new Annos();
                 a.setNimi(nimi);
+                a.setValmistusohje(kuvausList.get(0));
                 //a.set
                 
                 
