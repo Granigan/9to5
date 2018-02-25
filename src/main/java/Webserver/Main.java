@@ -99,6 +99,7 @@ public class Main {
             for (Annos annos : reseptit) {
                List<AnnosRaakaaine> aineet = new ArrayList<>();
                aineet.addAll(annosaineDao.findAll(annos.getId()));
+               annos.setRaakaaineet(aineet);
             }
             map.put("reseptit", reseptit);
 

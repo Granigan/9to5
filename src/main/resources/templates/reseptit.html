@@ -20,12 +20,18 @@
                     <table style="width:100%">
                         <tr>
                             <th>Nimi</th>
+                            <th>Raaka-aineita</th>
+                            <th>Näytä</th>
                             <th>Poista</th>
                         </tr>
                     <ul style="list-style-type:none">
                         <li th:each="resepti : ${reseptit}" style="list-style-type: none;">
                         <tr>
                             <td><span th:text="${resepti.nimi}"/></td>
+                            <td><span th:text="${resepti.getRaakaaineLkm()}"/></td>
+                            <td><form th:action="@{~/resepti/{id}(id=${resepti.getId()})}" method="POST">
+                                    <input type="submit" value="Näytä"/>
+                            </form></td>
                             <td><form th:action="@{~/reseptit/delete/{id}(id=${resepti.getId()})}" method="POST">
                                     <input type="submit" value="Poista"/>
                             </form></td>

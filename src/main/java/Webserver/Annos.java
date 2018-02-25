@@ -1,6 +1,7 @@
 package Webserver;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Annos {
 
@@ -43,4 +44,15 @@ public class Annos {
         return valmistusohje;
     }
     
+    public void setRaakaaineet(List raakaaineet) {
+        this.AnnosRaakaAineLista.addAll(raakaaineet);
+    }
+    
+    public ArrayList getRaakaaineet() {
+        return this.AnnosRaakaAineLista;
+    }
+    
+    public int getRaakaaineLkm() {
+        return (this.AnnosRaakaAineLista == null ? 0 : this.AnnosRaakaAineLista.size());
+    }
 }
