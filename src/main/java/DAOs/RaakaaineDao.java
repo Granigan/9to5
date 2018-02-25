@@ -24,9 +24,21 @@ public class RaakaaineDao implements Dao {
                     + ");");
             createTable.executeUpdate();
             createTable.close();
+            System.out.println("Luotiin taulu Raakaaine");
 
         } catch (Exception e) {
             System.out.println("ongelma luodessa raakaaine-taulua: " + e.getMessage());
+        }
+        try {
+            // Luodaan indeksi, jolla voidaan hakea aineita lower(nimi)
+            PreparedStatement createIndexAineId = con.prepareStatement(
+                    "CREATE INDEX IF NOT EXISTS RaakaaineIdx "
+                    + "ON Raakaaine (id);");
+            createIndexAineId.executeUpdate();
+            createIndexAineId.close();
+            System.out.println("Luotiin indeksi taululle Raakaaine");
+        } catch (Exception e) {
+            System.out.println("ongelma luodessa raakaaine-taulun indeksiä: " + e.getMessage());
         }
         try {
             // Luodaan indeksi, jolla voidaan hakea aineita lower(nimi)
@@ -35,6 +47,7 @@ public class RaakaaineDao implements Dao {
                     + "ON Raakaaine ((lower(nimi)));");
             createIndexAineNimi.executeUpdate();
             createIndexAineNimi.close();
+            System.out.println("Luotiin indeksi taululle Raakaaine");
         } catch (Exception e) {
             System.out.println("ongelma luodessa raakaaine-taulun indeksiä: " + e.getMessage());
         }
