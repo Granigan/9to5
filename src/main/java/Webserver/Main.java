@@ -158,6 +158,7 @@ public class Main {
                 // Type casting, koska RaakaaineDao palauttaa Object -olion
                 Raaka_aine realRaak = (Raaka_aine) (raakaDao.findOne(raak));
 
+                r.setRaakaaineenNimi(realRaak.getNimi());
                 r.setRaakaaineId(realRaak.getId());
 
                 reseptinCache.add(r);
