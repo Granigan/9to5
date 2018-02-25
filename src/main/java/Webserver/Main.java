@@ -142,7 +142,7 @@ public class Main {
                 r.setOhje(req.queryParams("ohje"));
                 int maara = 0;
                 try {
-                    Integer.parseInt(req.queryParams("maara"));
+                    maara = Integer.parseInt(req.queryParams("maara"));
                 } catch (NumberFormatException e) {
                     // TODO jos ehtii: joku palaute käyttäjälle huonosta syötteestä
                     // TAI html-formiin jokin määräys syötteen muodosta
@@ -150,9 +150,9 @@ public class Main {
                 }
 
                 r.setMaara(maara);
-                AnnosRaakaaine raak = new AnnosRaakaaine();
+                Raaka_aine raak = new Raaka_aine();
                 // Väliaikainen raaka-aineolio etsintää varten
-                raak.setRaakaaineenNimi(req.queryParams("raakaaine"));
+                raak.setNimi(req.queryParams("raakaaine"));
 
                 // Type casting, koska RaakaaineDao palauttaa Object -olion
                 Raaka_aine realRaak = (Raaka_aine) (raakaDao.findOne(raak));
