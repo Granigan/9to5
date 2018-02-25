@@ -167,21 +167,27 @@ public class Main {
                 a.setNimi(nimi);
                 a.setValmistusohje(kuvausList.get(0));
                 annosDao.saveOrUpdate(a);
-                annosaineDao.saveOrUpdate(annosaineDao);
+                //annosaineDao.saveOrUpdate();
                 
                 Annos currentAnnos = annosDao.findOne(a);
                 
                         
-                        //(Annos) (annosDao.findOne(a));
-                int count = 1;
+                        //(Annos) (annosDao.findOne(a
+                List<Byte> l = new ArrayList();
+                byte g = 0;
+                l.add(g);
                 reseptinCache.forEach(r -> {
                     AnnosRaakaaine ar = new AnnosRaakaaine();
                     ar.setAnnosId(currentAnnos.getId());
                     ar.setRaakaaineId(r.getRaakaaineId());
-                    ar.setMaara(count);
-                    //ar.setJarjestys(r.);
+                    ar.setMaara(r.getMaara());
+                    ar.setJarjestys(l.size());
 
-                    
+                    try {
+                    annosaineDao.saveOrUpdate(ar);
+                    } catch (SQLException e) {
+                        System.out.println("Jokin meni pieleen reseptia tallennettaessa: " + e);
+                    }
                     //ar.setAnnosId;
                             
                     //count++;
