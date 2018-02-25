@@ -93,7 +93,7 @@ public class RaakaaineDao implements Dao {
 
             Connection con = getConnection();
             PreparedStatement prep = con.prepareStatement("SELECT "
-                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.ra.id) AS kaytossa "
+                    + "ra.id, ra.nimi, ra.mittayksikko, count(ara.raakaaine_id) AS kaytossa "
                     + "FROM Raakaaine ra LEFT OUTER JOIN AnnosRaakaaine ara "
                     + "ON ra.id = ara.raakaaine_id "
                     + "GROUP BY ra.id, ra.nimi, ra.mittayksikko");
