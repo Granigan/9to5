@@ -174,7 +174,11 @@ public class Main {
         Spark.post("/raaka_ainereseptiin", (req, res) -> {
 
             if (req.queryParams("end") != null) {
-                // TODO: Tallennus tietokantaan
+                
+                if (reseptinCache.size() < 1) {
+                    res.redirect("/lisaaresepti");
+                    return " ";
+                }
                 
                 //String nimi = nimiList.get(0);
                 String nimi = req.queryParams("resNimi");
@@ -186,16 +190,17 @@ public class Main {
                 kuvausList.clear();
                 kuvausList.add(" ");
                 
+                
                 Annos a = new Annos();
                 a.setNimi(nimi);
                 a.setValmistusohje(kuvaus);
                 annosDao.saveOrUpdate(a);
                 
                 Annos currentAnnos = annosDao.findOne(a);
-                
+                /*
                                         List<Byte> l = new ArrayList();
                 byte g = 0;
-                l.add(g);
+                l.add(g);*/
                 
                 for (int i = 0; i < reseptinCache.size(); i++) {
                     AnnosRaakaaine r = reseptinCache.get(i);
@@ -211,27 +216,9 @@ public class Main {
                         System.out.println("Jokin meni pieleen reseptia tallennettaessa: " + e);
                     }
                    
-                }/*
-                reseptinCache.forEach(r -> {
-                    AnnosRaakaaine ar = new AnnosRaakaaine();
-                    ar.setAnnosId(currentAnnos.getId());
-                    ar.setRaakaaineId(r.getRaakaaineId());
-                    ar.setMaara(r.getMaara());
-                    ar.setJarjestys(l.size());
-
-                    try {
-                    annosaineDao.saveOrUpdate(ar);
-                    } catch (SQLException e) {
-                        System.out.println("Jokin meni pieleen reseptia tallennettaessa: " + e);
-                    }
-                    //ar.setAnnosId;
-                            
-                    //count++;
-                
-                });*/
+                }
 
                 reseptinCache.clear();
-                //reseptinCache = new ArrayList();
                 res.redirect("/reseptit");
                 return " ";
 
