@@ -18,19 +18,6 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
-        // Luodaan TestiDao herokun tietokannan testausta varten
-        TestiDao testi = new TestiDao();
-
-        // Tällä asetetaan testidaoon muutama testitieto aina palvelimen käynnistyessä.
-        // Tämäkin olemassa lähinnä testaamista ja valmistelua varten.
-        for (int i = 0; i < 10; i++) {
-            try {
-                testi.saveOne((int) (Math.random() * 1000));
-            } catch (Exception e) {
-
-            }
-        }
-
         RaakaaineDao raakaDao = new RaakaaineDao();
         raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
 
@@ -50,15 +37,8 @@ public class Main {
 
         System.out.println("Server starting.");
 
-        // TODO: Database-yhteyden luominen
         List<Raaka_aine> raakaaineet = new ArrayList<>();
         List<AnnosRaakaaine> reseptinCache = new ArrayList();
-        /*
-        raakaaineet.add(new Raaka_aine("Banaani"));
-        raakaaineet.add(new Raaka_aine("suola"));
-        raakaaineet.add(new Raaka_aine("suoli"));
-        raakaaineet.add(new Raaka_aine("suole"));
-         */
 
         /**
          *
@@ -66,13 +46,7 @@ public class Main {
          *
          *
          */
-        // herokun postgresql:n testaamista varten.
-        /*
-        Spark.get("/testi", (req, res) -> {
-            testi.saveOne((int) (Math.random() * 1000));
-            res.redirect("/");
-            return " ";
-        });*/
+        
         // Tästä alkavat "oikeat" eli tuotantoreitit
         Spark.get("/raaka_aineet", (req, res) -> {
 
@@ -107,16 +81,7 @@ public class Main {
             } catch (Exception e) {
                 System.out.println("Raaka-aineen delete: Yritettiin muuntaa id integeriksi siinä onnistumatta");
             }
-            /*
-             TODO: 
-            if (annosaineDao.isUsed(nimi)) {
-                // Tähän se mitä tehdään jos raaka-aine on käytössä
-            } else {
-                raakaDao.delete(nimi);
-            }
-             */
-            //return "<p>9to5 Corp has not implented this feature as of yet.</p>";
-            // Lopuksi redirect, kun kaikki ominaisuudet luotu
+            
             res.redirect("/raaka_aineet");
             return " ";
         });
@@ -156,25 +121,27 @@ public class Main {
 
         Spark.post("/raaka_ainereseptiin", (req, res) -> {
 
-            //Set<String> s = req.queryParams();
-            //System.out.println(req.body());
-            System.out.println(req.queryParams("maara"));
-            System.out.println(req.queryParams("raakaaine"));
-            System.out.println(req.queryParams("ohje"));
-            System.out.println(req.queryParams("add"));
-            System.out.println(req.queryParams("end"));
-
             if (req.queryParams("end") != null) {
-                // Tallennus tietokantaan
+                // TODO: Tallennus tietokantaan
                 
                 
-                
+                res.redirect("/reseptit");
+                return " ";
                 
             } else {
-                // reseptinCacheon tallentaminen
+                // reseptinCache:een tallentaminen
                 AnnosRaakaaine r = new AnnosRaakaaine();
                 r.setOhje(req.queryParams("ohje"));
-                r.setMaara(Integer.parseInt(req.queryParams("maara")));
+                int maara = 0;
+                try {
+                    Integer.parseInt(req.queryParams("maara"));
+                } catch (NumberFormatException e) {
+                    // TODO jos ehtii: joku palaute käyttäjälle huonosta syötteestä
+                    // TAI html-formiin jokin määräys syötteen muodosta
+                    maara = 0;
+                }
+                
+                r.setMaara(maara);
                 Raaka_aine raak = new Raaka_aine();
                 // Väliaikainen raaka-aineolio etsintää varten
                 raak.setNimi(req.queryParams("raakaaine"));
@@ -187,18 +154,8 @@ public class Main {
                 reseptinCache.add(r);
                 res.redirect("/lisaaresepti");
             }
-
-            //res.redirect("/reseptit");
             return " ";
         });
-
-        Spark.get("/int", (req, res) -> {
-            HashMap map = new HashMap<>();
-            List<Integer> intit = new ArrayList<>();
-            intit = testi.getAll();
-            map.put("intit", intit);
-            return new ModelAndView(map, "int");
-        }, new ThymeleafTemplateEngine());
 
         // "Catch-all" -reitti
         Spark.get("*", (req, res) -> {

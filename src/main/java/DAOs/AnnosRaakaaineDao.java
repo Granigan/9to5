@@ -206,7 +206,25 @@ public class AnnosRaakaaineDao implements Dao {
         } catch (SQLException e) {
             System.out.println("Kauhea ongelma poistettaessa raaka-ainetta annoksesta" + e.getMessage());
         }
+        
+    }
 
+    public void deleteAll(int annosId) throws SQLException {
+
+        try {
+            
+            Connection con = getConnection();
+            PreparedStatement poista = con.prepareStatement(""
+                    + "DELETE FROM AnnosRaakaaine "
+                    + "WHERE annos_id = ?");
+            poista.setInt(1, annosId);
+            poista.executeUpdate();
+            poista.close();
+            con.close();
+
+        } catch (SQLException e) {
+            System.out.println("Katastrofaalinen ongelma poistettaessa annoksen raaka-aineita" + e.getMessage());
+        }
     }
 
 }
