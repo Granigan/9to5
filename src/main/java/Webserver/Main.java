@@ -133,6 +133,21 @@ public class Main {
             return new ModelAndView(map, "resepti");
         }, new ThymeleafTemplateEngine());
 
+        Spark.post("/reseptit/delete/:id", (req, res) -> {
+
+            String id = req.params(":id");
+            try {
+                Annos dummy = new Annos();
+                dummy.setId(Integer.parseInt(id));
+                annosDao.delete(dummy);
+            } catch (Exception e) {
+                System.out.println("Reseptin delete: Yritettiin muuntaa id integeriksi siinä onnistumatta");
+            }
+
+            res.redirect("/reseptit");
+            return " ";
+        });
+
         Spark.get("/annosraakaaine", (req, res) -> {
 
             HashMap map = new HashMap<>();
