@@ -12,14 +12,6 @@ public class AnnosDao implements Dao {
     public AnnosDao() throws SQLException {
         try {
             Connection con = getConnection();
-            PreparedStatement dropOld = con.prepareStatement("DROP TABLE AnnosRaakaaine CASCADE"); //remove after table is updated for all
-            dropOld.executeUpdate();  // see above
-            dropOld = con.prepareStatement("DROP TABLE Annos CASCADE");
-            dropOld.executeUpdate();  // see above
-            dropOld = con.prepareStatement("DROP TABLE Raakaaine CASCADE");
-            dropOld.executeUpdate();  // see above
-            dropOld.close();
-            
             PreparedStatement createTable = con.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS Annos ("
                     + "id SERIAL PRIMARY KEY,"
@@ -59,21 +51,21 @@ public class AnnosDao implements Dao {
     @Override
     public List<Annos> findAll() throws SQLException {
         List<Annos> annokset = new ArrayList<>();
-        
+
         Connection con = getConnection();
         PreparedStatement haeKaikki = con.prepareStatement("SELECT * FROM Annos");
         ResultSet rs = haeKaikki.executeQuery();
-        
-        while(rs.next()){
+
+        while (rs.next()) {
             annokset.add(new Annos(rs.getInt("id"), rs.getString("nimi"), rs.getString("valmistusohje")));
         }
-        
+
         rs.close();
         haeKaikki.close();
         con.close();
-        
+
         return annokset;
-        
+
     }
 
     @Override
@@ -83,7 +75,7 @@ public class AnnosDao implements Dao {
             Connection connection = getConnection();
 
             if (findOne(talletettava) == null) {
-                
+
                 PreparedStatement stmt = connection.prepareStatement("INSERT INTO Annos (nimi) VALUES (?)");
                 stmt.setString(1, talletettava.getNimi());
 
@@ -109,11 +101,12 @@ public class AnnosDao implements Dao {
 
     @Override
     public void delete(Object key) throws SQLException {
-        // TODO: poistaminen
-        // annoksen poiston yhteydessä poistetaan myös sen kaikki ARAT
+
         Annos poistettava = (Annos) this.findOne(key);
+
         AnnosRaakaaineDao ARADao = new AnnosRaakaaineDao();
-//        ARADao.deleteAll(poistettava.getId()); tää puuttuu vielä ARADaosta
+        ARADao.deleteAll(poistettava.getId());
+
         Connection con = getConnection();
         PreparedStatement poista = con.prepareStatement("DELETE FROM Annos WHERE id = ?");
         poista.setInt(1, poistettava.getId());
@@ -134,12 +127,11 @@ public class AnnosDao implements Dao {
         if (rs.next()) {
             osuma = new Annos(rs.getInt("id"), rs.getString("nimi"), rs.getString("valmistusohje"));
         }
-        
-        
+
         rs.close();
         etsiYksi.close();
         con.close();
-        
+
         return osuma;
 
     }
