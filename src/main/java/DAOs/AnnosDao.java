@@ -1,26 +1,26 @@
-
 package DAOs;
 
 import Webserver.Annos;
 import Webserver.Database;
 import static Webserver.Database.getConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnnosDao implements Dao {
 
-    
     public AnnosDao() throws SQLException {
         try {
             Connection con = getConnection();
+            PreparedStatement dropOld = con.prepareStatement("DROP TABLE Annos"); //remove after table is updated for all
+            dropOld.executeUpdate();  // see above
+            dropOld.close();
+            
             PreparedStatement createTable = con.prepareStatement(
                     "CREATE TABLE IF NOT EXISTS Annos ("
                     + "id SERIAL PRIMARY KEY,"
-                    + "nimi varchar(50)"
+                    + "nimi varchar(50),"
+                    + "valmistusohje varchar(500)"
                     + ");");
             createTable.executeUpdate();
             createTable.close();
@@ -31,8 +31,7 @@ public class AnnosDao implements Dao {
         }
     }
 
-    @Override
-    public Annos findOne(Object key) throws SQLException {
+    public Annos findByName(Object key) throws SQLException {
         try {
             String etsittava = (String) key;
             Connection connection = getConnection();
@@ -40,11 +39,11 @@ public class AnnosDao implements Dao {
             stmt.setString(1, etsittava);
 
             ResultSet rs = stmt.executeQuery();
-            if(!rs.next()) {
+            if (!rs.next()) {
                 return null;
             }
 
-            Annos annos = new Annos(rs.getInt("id"), rs.getString("nimi"));
+            Annos annos = new Annos(rs.getInt("id"), rs.getString("nimi"), rs.getString("valmistusohje"));
             return annos;
 
         } catch (SQLException e) {
@@ -55,27 +54,51 @@ public class AnnosDao implements Dao {
 
     @Override
     public List<Annos> findAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Annos> annokset = new ArrayList<>();
+        
+        Connection con = getConnection();
+        PreparedStatement haeKaikki = con.prepareStatement("SELECT * FROM Annos");
+        ResultSet rs = haeKaikki.executeQuery();
+        
+        while(rs.next()){
+            annokset.add(new Annos(rs.getInt("id"), rs.getString("nimi"), rs.getString("valmistusohje")));
+        }
+        
+        rs.close();
+        haeKaikki.close();
+        con.close();
+        
+        return annokset;
+        
     }
 
     @Override
     public Annos saveOrUpdate(Object key) throws SQLException {
         try {
             Annos talletettava = (Annos) key;
-            
-            if (findOne(talletettava.getNimi()) == null) {
-                Connection connection = getConnection();
+            Connection connection = getConnection();
+
+            if (findOne(talletettava) == null) {
+                
                 PreparedStatement stmt = connection.prepareStatement("INSERT INTO Annos (nimi) VALUES (?)");
                 stmt.setString(1, talletettava.getNimi());
 
                 stmt.executeUpdate();
                 stmt.close();
                 connection.close();
-                
+
+            } else {
+                PreparedStatement paivita = connection.prepareStatement("UPDATE Annos SET "
+                        + "valmistusohje = ? WHERE nimi = ?");
+                paivita.setString(1, talletettava.getValmistusohje());
+                paivita.setString(2, talletettava.getNimi());
+                paivita.executeUpdate();
+                paivita.close();
+                connection.close();
             }
 
         } catch (SQLException e) {
-            System.out.println("ongelma lisättäessä yhtä annosta" + e.getMessage());
+            System.out.println("ongelma lisättäessä/päivitettäessä yhtä annosta" + e.getMessage());
         }
         return null;
     }
@@ -83,9 +106,38 @@ public class AnnosDao implements Dao {
     @Override
     public void delete(Object key) throws SQLException {
         // TODO: poistaminen
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // annoksen poiston yhteydessä poistetaan myös sen kaikki ARAT
+        Annos poistettava = (Annos) this.findOne(key);
+        AnnosRaakaaineDao ARADao = new AnnosRaakaaineDao();
+//        ARADao.deleteAll(poistettava.getId()); tää puuttuu vielä ARADaosta
+        Connection con = getConnection();
+        PreparedStatement poista = con.prepareStatement("DELETE FROM Annos WHERE id = ?");
+        poista.setInt(1, poistettava.getId());
+        poista.executeUpdate();
+        poista.close();
+        con.close();
     }
-    
-    
+
+    @Override
+    public Object findOne(Object key) throws SQLException {
+        Annos etsittava = (Annos) key;
+        Annos osuma = null;
+        Connection con = getConnection();
+        PreparedStatement etsiYksi = con.prepareStatement("SELECT * FROM Annos WHERE nimi = (?)");
+        etsiYksi.setString(1, etsittava.getNimi());
+        ResultSet rs = etsiYksi.executeQuery();
+
+        if (rs.next()) {
+            osuma = new Annos(rs.getInt("id"), rs.getString("nimi"), rs.getString("valmistusohje"));
+        }
+        
+        
+        rs.close();
+        etsiYksi.close();
+        con.close();
+        
+        return osuma;
+
+    }
+
 }
