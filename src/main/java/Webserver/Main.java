@@ -18,14 +18,14 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
-        RaakaaineDao raakaDao = new RaakaaineDao();
-        raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
-
         AnnosDao annosDao = new AnnosDao();
         annosDao.saveOrUpdate(new Annos(-1, "jauhelihakeitto", "kiehauta vesi, lisää ainekset"));
         System.out.println(annosDao.findByName("jauhelihakeitto"));
         System.out.println(annosDao.findOne(new Annos(-2, "jauhelihakeitto", "")));
         System.out.println("etsi kaikki:" + annosDao.findAll().toString());
+
+        RaakaaineDao raakaDao = new RaakaaineDao();
+        raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
 
         AnnosRaakaaineDao annosaineDao = new AnnosRaakaaineDao();
 
@@ -46,7 +46,6 @@ public class Main {
          *
          *
          */
-        
         // Tästä alkavat "oikeat" eli tuotantoreitit
         Spark.get("/raaka_aineet", (req, res) -> {
 
@@ -81,7 +80,7 @@ public class Main {
             } catch (Exception e) {
                 System.out.println("Raaka-aineen delete: Yritettiin muuntaa id integeriksi siinä onnistumatta");
             }
-            
+
             res.redirect("/raaka_aineet");
             return " ";
         });
@@ -123,11 +122,10 @@ public class Main {
 
             if (req.queryParams("end") != null) {
                 // TODO: Tallennus tietokantaan
-                
-                
+
                 res.redirect("/reseptit");
                 return " ";
-                
+
             } else {
                 // reseptinCache:een tallentaminen
                 AnnosRaakaaine r = new AnnosRaakaaine();
@@ -140,7 +138,7 @@ public class Main {
                     // TAI html-formiin jokin määräys syötteen muodosta
                     maara = 0;
                 }
-                
+
                 r.setMaara(maara);
                 Raaka_aine raak = new Raaka_aine();
                 // Väliaikainen raaka-aineolio etsintää varten

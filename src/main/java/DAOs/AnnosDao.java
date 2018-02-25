@@ -12,7 +12,11 @@ public class AnnosDao implements Dao {
     public AnnosDao() throws SQLException {
         try {
             Connection con = getConnection();
-            PreparedStatement dropOld = con.prepareStatement("DROP TABLE Annos"); //remove after table is updated for all
+            PreparedStatement dropOld = con.prepareStatement("DROP TABLE AnnosRaakaaine CASCADE"); //remove after table is updated for all
+            dropOld.executeUpdate();  // see above
+            dropOld = con.prepareStatement("DROP TABLE Annos CASCADE");
+            dropOld.executeUpdate();  // see above
+            dropOld = con.prepareStatement("DROP TABLE Raakaaine CASCADE");
             dropOld.executeUpdate();  // see above
             dropOld.close();
             
