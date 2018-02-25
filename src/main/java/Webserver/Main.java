@@ -37,6 +37,7 @@ public class Main {
 
         System.out.println("Server starting.");
 
+        // Välimuistissa oleva lisättävä resepti:
         List<Raaka_aine> raakaaineet = new ArrayList<>();
         List<AnnosRaakaaine> reseptinCache = new ArrayList();
         
@@ -165,10 +166,27 @@ public class Main {
                 Annos a = new Annos();
                 a.setNimi(nimi);
                 a.setValmistusohje(kuvausList.get(0));
-                //a.set
-                
-                
                 annosDao.saveOrUpdate(a);
+                annosaineDao.saveOrUpdate(annosaineDao);
+                
+                Annos currentAnnos = annosDao.findOne(a);
+                
+                        
+                        //(Annos) (annosDao.findOne(a));
+                int count = 1;
+                reseptinCache.forEach(r -> {
+                    AnnosRaakaaine ar = new AnnosRaakaaine();
+                    ar.setAnnosId(currentAnnos.getId());
+                    ar.setRaakaaineId(r.getRaakaaineId());
+                    ar.setMaara(count);
+                    //ar.setJarjestys(r.);
+
+                    
+                    //ar.setAnnosId;
+                            
+                    //count++;
+                
+                });
 
                 res.redirect("/reseptit");
                 return " ";

@@ -69,7 +69,7 @@ public class AnnosRaakaaineDao implements Dao {
     }
 
     @Override
-    public Object findOne(Object key) throws SQLException {
+    public AnnosRaakaaine findOne(Object key) throws SQLException {
         try {
             AnnosRaakaaine etsittava = (AnnosRaakaaine) key;
             AnnosRaakaaine osuma = null;

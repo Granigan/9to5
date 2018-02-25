@@ -56,7 +56,7 @@ public class RaakaaineDao implements Dao {
     }
 
     @Override
-    public Object findOne(Object key) throws SQLException {
+    public Raaka_aine findOne(Object key) throws SQLException {
         try {
             Raaka_aine etsittava = (Raaka_aine) key;
             Raaka_aine osuma = null;
