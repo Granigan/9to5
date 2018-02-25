@@ -99,10 +99,16 @@ public class Main {
             return " ";
         });
 
-        Spark.post("/raaka_aineet/delete", (req, res) -> {
+        Spark.post("/raaka_aineet/delete/:id", (req, res) -> {
 
-            String nimi = req.queryParams("raaka_aine");
-            
+            String id = req.params(":id");
+            try {
+                Raaka_aine dummy = new Raaka_aine();
+                dummy.setId(Integer.parseInt(id));
+                raakaDao.delete(dummy);
+            } catch (Exception e) {
+                System.out.println("Raaka-aineen delete: Yritettiin muuntaa id integeriksi siinä onnistumatta");
+            }
             /*
              TODO: 
             if (annosaineDao.isUsed(nimi)) {
@@ -111,10 +117,10 @@ public class Main {
                 raakaDao.delete(nimi);
             }
             */
-            return "<p>9to5 Corp has not implented this feature as of yet.</p>";
+            //return "<p>9to5 Corp has not implented this feature as of yet.</p>";
             // Lopuksi redirect, kun kaikki ominaisuudet luotu
-           // res.redirect("/raaka_aineet");
-            //return " ";
+            res.redirect("/raaka_aineet");
+            return " ";
         });
 
         Spark.get("/reseptit", (req, res) -> {
