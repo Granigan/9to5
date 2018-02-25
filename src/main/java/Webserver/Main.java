@@ -52,6 +52,7 @@ public class Main {
 
         // TODO: Database-yhteyden luominen
         List<Raaka_aine> raakaaineet = new ArrayList<>();
+        List<AnnosRaakaaine> reseptinCache = new ArrayList();
         /*
         raakaaineet.add(new Raaka_aine("Banaani"));
         raakaaineet.add(new Raaka_aine("suola"));
@@ -150,7 +151,10 @@ public class Main {
             
             HashMap map = new HashMap<>();
             List<Raaka_aine> a = new ArrayList();
+            List<AnnosRaakaaine> b = new ArrayList();
+            
             a = raakaDao.findAll();
+            map.put("edelliset", b);
             map.put("raaka_aineet", a);
             return new ModelAndView(map, "lisaaresepti");
         }, new ThymeleafTemplateEngine());
@@ -160,15 +164,10 @@ public class Main {
         Spark.post("/resepti", (req, res) -> {
             
             Set<String> s = req.queryParams();
-            System.out.println(req.body());
-            System.out.println(req.queryParams());
-            System.out.println(s.toString());
-            s.forEach(f -> {
-                System.out.println(f);
-            
-            });
-            
-            
+            //System.out.println(req.body());
+            System.out.println(req.queryParams("maara"));
+            System.out.println(req.queryParams("raakaaine"));
+            System.out.println(req.queryParams("ohje"));
             
             res.redirect("/reseptit");
             return " ";

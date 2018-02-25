@@ -16,16 +16,16 @@ and open the template in the editor.
 
         <h2>Reseptin lisäys:</h2>
         <form method="POST" action="resepti">
-            <ol>
-                <li th:each="raakaaine: ${raaka_aineet}" th:id="${raakaaineStat.index}">
+           <!-- <ol>
+                <li th:each="raakaaine: ${raaka_aineet}" th:id="${raakaaineStat.index}">-->
                     <select name="raakaaine">
                         <option th:each="raakaaine: ${raaka_aineet}" th:text="${raakaaine.nimi}"></option>
                     </select>
-                    <input type="text" name="maara + ${raakaaineStat.index}" placeholder="määrä"></input>
+                    <input type="text" name="maara" placeholder="määrä"></input>
                     <input type="text" name="ohje" placeholder="Ohje"></input>
 
-                </li>
-            </ol>
+              <!--  </li>
+            </ol> -->
             <input type="submit"></input>
         </form>
     </body>
