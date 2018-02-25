@@ -120,9 +120,7 @@ public class Main {
                 System.out.println("Reseptin haku: Yritettiin muuntaa id integeriksi siinä onnistumatta");
             }
             map.put("resepti", annos);
-
-            res.redirect("/resepti");
-            return " ";
+            return new ModelAndView(map, "resepti");
         });
 
         Spark.get("/annosraakaaine", (req, res) -> {
