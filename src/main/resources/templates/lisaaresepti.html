@@ -11,7 +11,21 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>Uuden reseptin luomien</div>
+        <h2>Luo uusi resepti!</h2>
+
+
+        <h3>Valitse raaka-aine ja tarvittava määrä:</h3>
+        <form method="POST" action="raaka_ainereseptiin">
+            <!-- <ol>
+                 <li th:each="raakaaine: ${raaka_aineet}" th:id="${raakaaineStat.index}">-->
+            <select name="raakaaine">
+                <option th:each="raakaaine: ${raaka_aineet}" th:text="${raakaaine.nimi}"></option>
+            </select>
+            <input type="number" min="0" name="maara" placeholder="Määrä" ></input>
+            <input type="text" name="ohje" placeholder="Lisäysohje"></input>
+            <input type="submit" name="add" value="Lisää reseptiin"></input>
+
+	<br>
 
         <ol>
             <li th:each="edellinen : ${edelliset}">
@@ -21,36 +35,28 @@ and open the template in the editor.
             </li>
         </ol>
 
-
-        <h2>Reseptin lisäys:</h2>
-        <form method="POST" action="raaka_ainereseptiin">
-            <!-- <ol>
-                 <li th:each="raakaaine: ${raaka_aineet}" th:id="${raakaaineStat.index}">-->
-            <select name="raakaaine">
-                <option th:each="raakaaine: ${raaka_aineet}" th:text="${raakaaine.nimi}"></option>
-            </select>
-            <input type="number" min="0" name="maara" placeholder="määrä" ></input>
-            <input type="text" name="ohje" placeholder="Ohje"></input>
-            <input type="submit" name="add" value="Lisää"></input>
-            
-            <p> </p>
+	<br>
+	<p>Kun olet lisännyt kaikki raaka-aineet, kirjoita alle reseptin nimi ja kattava valmistusohje. Lopuksi paina Valmis lisätäksesi reseptin tietokantaan.
+	</p>
+	<br>
             <input th:text="${resNimi}" type="text" name="resNimi" placeholder="Reseptin nimi" ></input>
-            <input th:text="${resKuvaus}" placeholder="reseptin kuvaus"></input>
-<!--th:text="${resNimi}"-->
+            <input th:textfield="${resKuvaus}" placeholder="Valmistusohje"></input>
+            <!--th:text="${resNimi}"-->
             <!--th:text="${resKuvaus}"-->
             <!--  </li>
           </ol> -->
-            
-            
+
+
             <input type="submit" name="end" value="Valmis"></input>
         </form>
-
+	<br>
+	<br>
         <div>
             <a href="/">Etusivu</a>
             <a href="/reseptit">Katsele reseptejä</a>
             <a href="/raaka_aineet">Lisää tai päivitä raaka-aineita</a>
         </div>
-        
+
     </body>
-        
+
 </html>
