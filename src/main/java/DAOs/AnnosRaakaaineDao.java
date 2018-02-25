@@ -103,7 +103,17 @@ public class AnnosRaakaaineDao implements Dao {
         try {
 
             Connection con = getConnection();
-            PreparedStatement prep = con.prepareStatement("SELECT * FROM AnnosRaakaaine ORDER BY jarjestys");
+            PreparedStatement prep = con.prepareStatement(""
+                    + "SELECT "
+                    + "ara.annos_id, "
+                    + "ara.raakaaine_id, "
+                    + "ara.jarjestys, "
+                    + "ara.maara, "
+                    + "ara.ohje, "
+                    + "ra.nimi "
+                    + "FROM AnnosRaakaaine ara, Raakaaine ra "
+                    + "WHERE ara.raakaaine_id = ra.id "
+                    + "ORDER BY jarjestys");
 
             ResultSet r = prep.executeQuery();
 
@@ -130,7 +140,17 @@ public class AnnosRaakaaineDao implements Dao {
 
             Connection con = getConnection();
             PreparedStatement prep = con.prepareStatement(""
-                    + "SELECT * FROM AnnosRaakaaine WHERE annos_id = ? ORDER BY jarjestys");
+                    + "SELECT "
+                    + "ara.annos_id, "
+                    + "ara.raakaaine_id, "
+                    + "ara.jarjestys, "
+                    + "ara.maara, "
+                    + "ara.ohje, "
+                    + "ra.nimi "
+                    + "FROM AnnosRaakaaine ara, Raakaaine ra "
+                    + "WHERE ara.annos_id = ? "
+                    + "AND ara.raakaaine_id = ra.id "
+                    + "ORDER BY jarjestys");
 
             prep.setInt(1, annosId);
             ResultSet r = prep.executeQuery();
@@ -157,6 +177,7 @@ public class AnnosRaakaaineDao implements Dao {
         annRaak.setJarjestys(r.getInt("jarjestys"));
         annRaak.setMaara(r.getInt("maara"));
         annRaak.setOhje(r.getString("ohje"));
+        annRaak.setRaakaaineenNimi(r.getString("nimi"));
         return annRaak;
     }
 
@@ -216,7 +237,7 @@ public class AnnosRaakaaineDao implements Dao {
     public void delete(Object key) throws SQLException {
 
         try {
-            AnnosRaakaaine pois = (AnnosRaakaaine)key;
+            AnnosRaakaaine pois = (AnnosRaakaaine) key;
 
             Connection con = getConnection();
             PreparedStatement poista = con.prepareStatement(""
@@ -234,13 +255,13 @@ public class AnnosRaakaaineDao implements Dao {
         } catch (SQLException e) {
             System.out.println("Kauhea ongelma poistettaessa raaka-ainetta annoksesta" + e.getMessage());
         }
-        
+
     }
 
     public void deleteAll(int annosId) throws SQLException {
 
         try {
-            
+
             Connection con = getConnection();
             PreparedStatement poista = con.prepareStatement(""
                     + "DELETE FROM AnnosRaakaaine "
