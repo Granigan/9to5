@@ -115,9 +115,12 @@ public class Main {
         Spark.get("/lisaaresepti", (req, res) -> {
 
             HashMap map = new HashMap<>();
-            
+            List<Raaka_aine> a = new ArrayList();
+            //List<AnnosRaakaaine> b = new ArrayList();
+
+            a = raakaDao.findAll();
             map.put("edelliset", reseptinCache);
-            //map.put("raaka_aineet", a);
+            map.put("raaka_aineet", a);
             return new ModelAndView(map, "lisaaresepti");
         }, new ThymeleafTemplateEngine());
 
@@ -148,7 +151,7 @@ public class Main {
                 raak.setRaakaaineenNimi(req.queryParams("raakaaine"));
 
                 // Type casting, koska RaakaaineDao palauttaa Object -olion
-                Raaka_aine realRaak = (Raaka_aine) (raakaDao.findOne(raak.getRaakaaineId()));
+                Raaka_aine realRaak = (Raaka_aine) (raakaDao.findOne(raak));
 
                 r.setRaakaaineId(realRaak.getId());
 
