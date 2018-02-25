@@ -34,7 +34,7 @@
                             <td><span th:text="${raaka_aine.mittayksikko}"/></td>
                             <td><span th:text="${raaka_aine.kuvaus}"/></td>
                             <td><span th:text="${raaka_aine.kaytossa}"/></td>
-                            <td><form th:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.id})}" method="POST">
+                            <td><form th:action="@{~/raaka_aineet/delete/{id}(id=${raaka_aine.getId()})}" method="POST">
                                     <input type="submit" value="Poista"/>
                             </form></td>
                         </tr>
