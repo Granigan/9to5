@@ -84,6 +84,8 @@ public class Main {
             return new ModelAndView(map, "raaka-aine");
         }, new ThymeleafTemplateEngine());
 
+        
+        
         Spark.post("/raaka_aineet", (req, res) -> {
             // Lisätään raaka-aine tietokantaan
 
@@ -103,7 +105,7 @@ public class Main {
             
             /*
              TODO: 
-            if (reseptidao.isUsed(nimi)) {
+            if (annosaineDao.isUsed(nimi)) {
                 // Tähän se mitä tehdään jos raaka-aine on käytössä
             } else {
                 raakaDao.delete(nimi);
@@ -136,14 +138,40 @@ public class Main {
             map.put("annosraakaaineet", ARs);
             return new ModelAndView(map, "annosraakaaine");
         }, new ThymeleafTemplateEngine());
+        
+        
+        Spark.get("/lisaaresepti", (req, res) -> {
+            
+            HashMap map = new HashMap<>();
+            List<Raaka_aine> a = new ArrayList();
+            a = raakaDao.findAll();
+            map.put("raaka_aineet", a);
+            return new ModelAndView(map, "lisaaresepti");
+        }, new ThymeleafTemplateEngine());
+        
+        
+        
+        Spark.post("/resepti", (req, res) -> {
+            
+            Set<String> s = req.queryParams();
+            System.out.println(req.body());
+            System.out.println(req.queryParams());
+            System.out.println(s.toString());
+            s.forEach(f -> {
+                System.out.println(f);
+            
+            });
+            
+            
+            
+            res.redirect("/reseptit");
+            return " ";
+        });
 
 
         Spark.get("/int", (req, res) -> {
-
             HashMap map = new HashMap<>();
-
             List<Integer> intit = new ArrayList<>();
-
             intit = testi.getAll();
             map.put("intit", intit);
             return new ModelAndView(map, "int");
@@ -153,11 +181,8 @@ public class Main {
         
         // "Catch-all" -reitti
         Spark.get("*", (req, res) -> {
-
             HashMap map = new HashMap<>();
-
-            map.put("raaka_aineet", raakaaineet);
-
+            //map.put("raaka_aineet", raakaaineet);
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 

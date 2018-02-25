@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Uuden reseptin luominen</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Uuden reseptin luomien</div>
+
+
+        <h2>Reseptin lisäys:</h2>
+        <form method="POST" action="resepti">
+            <ol>
+                <li th:each="raakaaine: ${raaka_aineet}" th:id="${raakaaineStat.index}">
+                    <select name="raakaaine">
+                        <option th:each="raakaaine: ${raaka_aineet}" th:text="${raakaaine.nimi}"></option>
+                    </select>
+                    <input type="text" name="maara + ${raakaaineStat.index}" placeholder="määrä"></input>
+                    <input type="text" name="ohje" placeholder="Ohje"></input>
+
+                </li>
+            </ol>
+            <input type="submit"></input>
+        </form>
+    </body>
+</html>
