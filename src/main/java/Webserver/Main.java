@@ -39,6 +39,9 @@ public class Main {
 
         List<Raaka_aine> raakaaineet = new ArrayList<>();
         List<AnnosRaakaaine> reseptinCache = new ArrayList();
+        
+        //Säilyttää nimen ja kuvauksen
+        List<String> reseptiList = new ArrayList();
 
         /**
          *
@@ -142,6 +145,8 @@ public class Main {
 
             a = raakaDao.findAll();
             map.put("edelliset", reseptinCache);
+            map.put("resNimi", reseptiList.get(0));
+            map.put("resKuvaus", reseptiList.get(1));
             map.put("raaka_aineet", a);
             return new ModelAndView(map, "lisaaresepti");
         }, new ThymeleafTemplateEngine());
@@ -150,6 +155,16 @@ public class Main {
 
             if (req.queryParams("end") != null) {
                 // TODO: Tallennus tietokantaan
+                
+                String nimi = reseptiList.get(0);
+                //reseptiList. clear();
+                
+                Annos a = new Annos();
+                a.setNimi(nimi);
+                //a.set
+                
+                
+                annosDao.saveOrUpdate(a);
 
                 res.redirect("/reseptit");
                 return " ";
@@ -165,6 +180,15 @@ public class Main {
                     // TODO jos ehtii: joku palaute käyttäjälle huonosta syötteestä
                     // TAI html-formiin jokin määräys syötteen muodosta
                     maara = 0;
+                }
+                //reseptinNimi = req.queryParams("resNimi").toCharArray();
+                //System.out.println(req.queryParams("resNimi"));
+                
+                //Nimi talteen:
+                String nimi = req.queryParams("resNimi");
+                if (nimi != null) {
+                    //reseptiList. .get(0) = null;
+                    reseptiList.add(0, nimi);
                 }
 
                 r.setMaara(maara);
