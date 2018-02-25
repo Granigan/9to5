@@ -161,10 +161,9 @@ public class Main {
         Spark.get("/lisaaresepti", (req, res) -> {
 
             HashMap map = new HashMap<>();
-            List<Raaka_aine> a = new ArrayList();
+            List<Raaka_aine> a = raakaDao.findAll();
             //List<AnnosRaakaaine> b = new ArrayList();
 
-            a = raakaDao.findAll();
             map.put("edelliset", reseptinCache);
             map.put("resNimi", nimiList.get(0));
             map.put("resKuvaus", kuvausList.get(0));
@@ -179,10 +178,15 @@ public class Main {
                 
                 String nimi = nimiList.get(0);
                 nimiList.clear();
+                nimiList.add(" ");
+                
+                String kuvaus = kuvausList.get(0);
+                kuvausList.clear();
+                kuvausList.add(" ");
                 
                 Annos a = new Annos();
                 a.setNimi(nimi);
-                a.setValmistusohje(kuvausList.get(0));
+                a.setValmistusohje(kuvaus);
                 annosDao.saveOrUpdate(a);
                 //annosaineDao.saveOrUpdate();
                 
@@ -211,6 +215,8 @@ public class Main {
                 
                 });
 
+                reseptinCache.clear();
+                //reseptinCache = new ArrayList();
                 res.redirect("/reseptit");
                 return " ";
 
