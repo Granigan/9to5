@@ -28,7 +28,7 @@
                             <th>Poista</th>
                         </tr>
                     <ul style="list-style-type:none">
-                        <li th:each="raaka_aine : ${raaka_aineet}">
+                        <li th:each="raaka_aine : ${raaka_aineet}" style="list-style-type: none;">
                         <tr>
                             <td><span th:text="${raaka_aine.nimi}"/></td>
                             <td><span th:text="${raaka_aine.mittayksikko}"/></td>
