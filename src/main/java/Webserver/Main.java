@@ -259,6 +259,7 @@ public class Main {
                 Raaka_aine realRaak = raakaDao.findOne(id);
                 r.setRaakaaineenNimi(realRaak.getNimi());                
                 r.setRaakaaineId(id);
+                r.setRaakaaineenMittayksikko(realRaak.getMittayksikko());
 
                 System.out.println("Ending recipe updating procedure.");
                 reseptinCache.add(r);
