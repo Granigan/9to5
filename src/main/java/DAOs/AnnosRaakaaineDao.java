@@ -88,7 +88,7 @@ public class AnnosRaakaaineDao implements Dao {
                     + "WHERE ara.annos_id = ? "
                     + "AND ara.raakaaine_id = ? "
                     + "AND ara.jarjestys = ?"
-                    + "ara.raakaaine_id = ra.id "
+                    + "AND ara.raakaaine_id = ra.id "
                     + "ORDER BY jarjestys");
             haku.setInt(1, etsittava.getAnnosId());
             haku.setInt(2, etsittava.getRaakaaineId());
