@@ -120,10 +120,10 @@ public class Main {
             HashMap map = new HashMap<>();
             String id = req.params(":id");
             Annos annos = new Annos();
-            System.out.println("rlog:"+annos.getValmistusohje());
             List<AnnosRaakaaine> aineet = new ArrayList<>();
             try {
                 annos = (Annos) annosDao.findById(Integer.parseInt(id));
+                System.out.println("valmistusohje-rlog: " + annos.getValmistusohje());
                 aineet.addAll(annosaineDao.findAll(annos.getId()));
                 annos.setRaakaaineet(aineet);
             } catch (Exception e) {
