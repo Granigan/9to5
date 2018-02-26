@@ -173,6 +173,7 @@ public class Main {
 
         Spark.post("/raaka_ainereseptiin", (req, res) -> {
 
+            // JOS on painettu painiketta "valmis"
             if (req.queryParams("end") != null) {
                 
                 if (reseptinCache.size() < 1) {
@@ -196,6 +197,7 @@ public class Main {
                 Annos a = new Annos();
                 a.setNimi(nimi);
                 a.setValmistusohje(kuvaus);
+                
                 System.out.println(a.getValmistusohje());
                 annosDao.saveOrUpdate(a);
                 
@@ -207,6 +209,7 @@ public class Main {
                     AnnosRaakaaine ar = new AnnosRaakaaine();
                     ar.setAnnosId(currentAnnos.getId());
                     ar.setRaakaaineId(r.getRaakaaineId());
+                    ar.setOhje(r.getOhje());
                     ar.setMaara(r.getMaara());
                     ar.setJarjestys(i);
 
