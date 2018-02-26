@@ -194,13 +194,11 @@ public class Main {
                 Annos a = new Annos();
                 a.setNimi(nimi);
                 a.setValmistusohje(kuvaus);
+                System.out.println(a.getValmistusohje());
                 annosDao.saveOrUpdate(a);
                 
                 Annos currentAnnos = annosDao.findOne(a);
-                /*
-                                        List<Byte> l = new ArrayList();
-                byte g = 0;
-                l.add(g);*/
+
                 
                 for (int i = 0; i < reseptinCache.size(); i++) {
                     AnnosRaakaaine r = reseptinCache.get(i);
@@ -246,16 +244,11 @@ public class Main {
                 r.setMaara(maara);
                 // Väliaikainen raaka-aineolio etsintää varten
                 Raaka_aine raak = new Raaka_aine();
-                //raak.setNimi(req.queryParams("raakaaine"));
                 int id = Integer.parseInt(req.queryParams("raakaaine"));
                 raak.setId(id);
 
-                // Type casting, koska RaakaaineDao palauttaa Object -olion
                 Raaka_aine realRaak = raakaDao.findOne(id);
-
-                r.setRaakaaineenNimi(realRaak.getNimi());
-                //r.setRaakaaineId(realRaak.getId());
-                
+                r.setRaakaaineenNimi(realRaak.getNimi());                
                 r.setRaakaaineId(id);
 
                 reseptinCache.add(r);
