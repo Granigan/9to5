@@ -41,19 +41,10 @@ public class Main {
         System.out.println("Server starting.");
 
         // Välimuistissa oleva lisättävä resepti:
-        List<Raaka_aine> raakaaineet = new ArrayList<>();
         List<AnnosRaakaaine> reseptinCache = new ArrayList();
         
-        //Säilyttää nimen ja kuvauksen
-        //List<String> nimiList = new ArrayList();
-        //nimiList.add(" ");
-        //List<String> kuvausList = new ArrayList();
-        //kuvausList.add(" ");
-        
         /**
-         *
          * R E I T I T
-         *
          */
         // Tästä alkavat "oikeat" eli tuotantoreitit
         Spark.get("/raaka_aineet", (req, res) -> {
@@ -153,7 +144,6 @@ public class Main {
             HashMap map = new HashMap<>();
             List<Integer> ARs = new ArrayList<>();
             ARs = annosaineDao.findAll();
-            // TODO: tähän annosraakaaineiden haku
 
             map.put("annosraakaaineet", ARs);
             return new ModelAndView(map, "annosraakaaine");
@@ -163,11 +153,8 @@ public class Main {
 
             HashMap map = new HashMap<>();
             List<Raaka_aine> a = raakaDao.findAll();
-            //List<AnnosRaakaaine> b = new ArrayList();
 
             map.put("edelliset", reseptinCache);
-            //map.put("resNimi", nimiList.get(0));
-            //map.put("resKuvaus", kuvausList.get(0));
             map.put("raaka_aineet", a);
             return new ModelAndView(map, "lisaaresepti");
         }, new ThymeleafTemplateEngine());
@@ -184,17 +171,11 @@ public class Main {
                 
                 System.out.println("Starting recipe saving procedure.");
                 
-                //String nimi = nimiList.get(0);
                 String nimi = req.queryParams("resNimi");
-                //nimiList.clear();
-                //nimiList.add(" ");
-                
-                //String kuvaus = kuvausList.get(0);
+
                 String kuvaus = req.queryParams("resKuvaus");
                 System.out.println("Kalasteltu kuvaus: " + kuvaus);
-                //kuvausList.clear();
-                //kuvausList.add(" ");
-                
+
                 
                 Annos a = new Annos();
                 a.setNimi(nimi);
@@ -247,12 +228,7 @@ public class Main {
                 
                 //Nimi talteen:
                 String nimi = req.queryParams("resNimi");
-                /*
-                if (nimi != null) {
-                    nimiList.clear();
-                    nimiList.add(0, nimi);
-                }*/
-
+           
                 r.setMaara(maara);
                 // Väliaikainen raaka-aineolio etsintää varten
                 Raaka_aine raak = new Raaka_aine();
