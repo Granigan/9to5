@@ -211,7 +211,7 @@ public class AnnosRaakaaineDao implements Dao {
                 PreparedStatement paivita = con.prepareStatement(""
                         + "UPDATE AnnosRaakaaine SET "
                         + "maara = ?, "
-                        + "ohje = ?, "
+                        + "ohje = ? "
                         + "WHERE annos_id = ? "
                         + "AND raakaaine_id = ? "
                         + "AND jarjestys = ?");
