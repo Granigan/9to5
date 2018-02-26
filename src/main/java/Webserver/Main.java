@@ -224,6 +224,8 @@ public class Main {
 
             } else {
                 // reseptinCache:een tallentaminen
+                System.out.println(req.queryParams());
+                System.out.println(req.queryMap());
                 AnnosRaakaaine r = new AnnosRaakaaine();
                 r.setOhje(req.queryParams("ohje"));
                 int maara = 0;
