@@ -30,7 +30,8 @@ and open the template in the editor.
             <ol>
                 <li th:each="edellinen : ${edelliset}">
                     <span th:text="${edellinen.getRaakaaineenNimi}" required>Raaka-aine</span>
-                    <span th:text="${edellinen.maara}">Mittayksikkö</span>
+                    <span th:text="${edellinen.maara}">Määrä</span>
+                    <span th:text="${edellinen.getRaakaaineenMittayksikko}">Mitta</span>
                     <p th:text="${edellinen.ohje}">Kuvaus</p>
                 </li>
             </ol>
