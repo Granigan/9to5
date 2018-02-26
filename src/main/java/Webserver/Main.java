@@ -247,7 +247,7 @@ public class Main {
                 // Väliaikainen raaka-aineolio etsintää varten
                 Raaka_aine raak = new Raaka_aine();
                 //raak.setNimi(req.queryParams("raakaaine"));
-                int id = Integer.parseInt(req.queryParams("raakaaaine"));
+                int id = Integer.parseInt(req.queryParams("raakaaine"));
                 raak.setId(id);
 
                 // Type casting, koska RaakaaineDao palauttaa Object -olion
