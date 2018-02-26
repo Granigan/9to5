@@ -14,7 +14,6 @@
             <a href="/reseptit">Katsele reseptejä</a>
             <a href="/raaka_aineet">Lisää tai päivitä raaka-aineita</a>
         </div>
-
         <table style="width:100%">
             <ul style="list-style-type:none">
                 <li th:each="ARA : ${resepti}" style="list-style-type: none;">
@@ -29,6 +28,16 @@
                 </li>
             </ul>
         </table>
+        <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+        </style>
         <table style="width:100%">
             <tr>
                 
