@@ -165,8 +165,8 @@ public class Main {
             //List<AnnosRaakaaine> b = new ArrayList();
 
             map.put("edelliset", reseptinCache);
-            map.put("resNimi", nimiList.get(0));
-            map.put("resKuvaus", kuvausList.get(0));
+            //map.put("resNimi", nimiList.get(0));
+            //map.put("resKuvaus", kuvausList.get(0));
             map.put("raaka_aineet", a);
             return new ModelAndView(map, "lisaaresepti");
         }, new ThymeleafTemplateEngine());
