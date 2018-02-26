@@ -45,10 +45,10 @@ public class Main {
         List<AnnosRaakaaine> reseptinCache = new ArrayList();
         
         //Säilyttää nimen ja kuvauksen
-        List<String> nimiList = new ArrayList();
-        nimiList.add(" ");
-        List<String> kuvausList = new ArrayList();
-        kuvausList.add(" ");
+        //List<String> nimiList = new ArrayList();
+        //nimiList.add(" ");
+        //List<String> kuvausList = new ArrayList();
+        //kuvausList.add(" ");
         
         /**
          *
@@ -186,14 +186,14 @@ public class Main {
                 
                 //String nimi = nimiList.get(0);
                 String nimi = req.queryParams("resNimi");
-                nimiList.clear();
-                nimiList.add(" ");
+                //nimiList.clear();
+                //nimiList.add(" ");
                 
                 //String kuvaus = kuvausList.get(0);
                 String kuvaus = req.queryParams("resKuvaus");
                 System.out.println("Kalasteltu kuvaus: " + kuvaus);
-                kuvausList.clear();
-                kuvausList.add(" ");
+                //kuvausList.clear();
+                //kuvausList.add(" ");
                 
                 
                 Annos a = new Annos();
@@ -201,6 +201,8 @@ public class Main {
                 a.setValmistusohje(kuvaus);
                 
                 System.out.println("objektiin injektoitu kuvaus: " + a.getValmistusohje());
+                annosDao.saveOrUpdate(a);
+                // Uudestaan!!!
                 annosDao.saveOrUpdate(a);
                 
                 Annos currentAnnos = annosDao.findOne(a);
@@ -247,10 +249,11 @@ public class Main {
                 
                 //Nimi talteen:
                 String nimi = req.queryParams("resNimi");
+                /*
                 if (nimi != null) {
                     nimiList.clear();
                     nimiList.add(0, nimi);
-                }
+                }*/
 
                 r.setMaara(maara);
                 // Väliaikainen raaka-aineolio etsintää varten
