@@ -190,6 +190,7 @@ public class Main {
                 
                 //String kuvaus = kuvausList.get(0);
                 String kuvaus = req.queryParams("resKuvaus");
+                System.out.println("Kalasteltu kuvaus: " + kuvaus);
                 kuvausList.clear();
                 kuvausList.add(" ");
                 
@@ -198,7 +199,7 @@ public class Main {
                 a.setNimi(nimi);
                 a.setValmistusohje(kuvaus);
                 
-                System.out.println(a.getValmistusohje());
+                System.out.println("objektiin injektoitu kuvaus: " + a.getValmistusohje());
                 annosDao.saveOrUpdate(a);
                 
                 Annos currentAnnos = annosDao.findOne(a);
