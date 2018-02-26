@@ -76,8 +76,10 @@ public class AnnosDao implements Dao {
 
             if (findOne(talletettava) == null) {
 
-                PreparedStatement stmt = connection.prepareStatement("INSERT INTO Annos (nimi) VALUES (?)");
+                PreparedStatement stmt = connection.prepareStatement(""
+                        + "INSERT INTO Annos (nimi, valmistusohje) VALUES (?, ?)");
                 stmt.setString(1, talletettava.getNimi());
+                stmt.setString(2, talletettava.getValmistusohje());
 
                 stmt.executeUpdate();
                 stmt.close();
