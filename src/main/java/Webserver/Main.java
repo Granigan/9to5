@@ -244,16 +244,19 @@ public class Main {
                 }
 
                 r.setMaara(maara);
-                Raaka_aine raak = new Raaka_aine();
                 // Väliaikainen raaka-aineolio etsintää varten
+                Raaka_aine raak = new Raaka_aine();
                 //raak.setNimi(req.queryParams("raakaaine"));
-                raak.setId(Integer.parseInt(req.queryParams("raakaaine")));
+                int id = Integer.parseInt(req.queryParams("raakaaaine"));
+                raak.setId(id);
 
                 // Type casting, koska RaakaaineDao palauttaa Object -olion
                 Raaka_aine realRaak = raakaDao.findOne(raak);
 
                 r.setRaakaaineenNimi(realRaak.getNimi());
-                r.setRaakaaineId(realRaak.getId());
+                //r.setRaakaaineId(realRaak.getId());
+                
+                r.setRaakaaineId(id);
 
                 reseptinCache.add(r);
                 res.redirect("/lisaaresepti");

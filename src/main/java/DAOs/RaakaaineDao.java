@@ -83,7 +83,36 @@ public class RaakaaineDao implements Dao {
         }
         return null;
     }
+    
+        //@Override
+    public Raaka_aine findOne(int id) throws SQLException {
+        try {
+           // Raaka_aine etsittava = (Raaka_aine) key;
+            Raaka_aine osuma = null;
+            Connection con = getConnection();
+            PreparedStatement haku = con.prepareStatement("SELECT "
+                    + "ra.id, ra.nimi, ra.mittayksikko, ra.kuvaus, count(distinct ara.annos_id) AS kaytossa "
+                    + "FROM Raakaaine ra LEFT OUTER JOIN AnnosRaakaaine ara "
+                    + "ON ra.id = ara.raakaaine_id "
+                    + "WHERE ra.id = ? "
+                    + "GROUP BY ra.id, ra.nimi, ra.mittayksikko, ra.kuvaus");
+            haku.setInt(1, id);
+            ResultSet rs = haku.executeQuery();
+            if (rs.next()) {
+                osuma = populoi(rs);
+            }
 
+            rs.close();
+            haku.close();
+            con.close();
+            return osuma;
+
+        } catch (SQLException e) {
+            System.out.println("ongelma etsiessä yhtä raaka-ainetta" + e.getMessage());
+        }
+        return null;
+    }
+    
     @Override
     public List findAll() throws SQLException {
 
