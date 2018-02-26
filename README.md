@@ -1,2 +1,4 @@
 # 9to5
-0to5 ryhmän repo tikape-kurssin ryhmätyötä varten.
+9to5 ryhmän repo tikape-kurssin ryhmätyötä varten.
+
+Työssä on toteutettu PostgreSQL-tietokannanhallintajärjestelmää käyttävä web-sovellus, jota voi tarkastella Heroku-palvelussa. Web-sovelluksen aiheena on reseptipankki, jossa käyttäjä voi lisätä haluamiaan raaka-aineita ja koostaa niistä reseptejä. Raaka-aineita ja reseptejä voi toki myös poistaa niin halutessaan. Raaka-aineeseen voi halutessaan liittää raaka-aineen kuvauksen ja tiedon mittayksiköstä. Reseptiin tulee liittää vähintään yksi raaka-aine, sekä raaka-aieniden määrä ja lisäysohje. Raaka-aineet tulee lisätä tietokantaan järjestyksessä. Lopuksi käyttäjän tulee antaa reseptille nimi ja valmistusohje.  Sovellus tarjoaa myös tilastotietoja siitä, kuinka monessa reseptissä raaka-aine on käytössä ja toisaalta myös kuinka monta raaka-ainetta kussakin reseptissä on käytössä. Sovellus johdattelee käyttäjää ja on vapaasti kenen tahansa käytettävissä.
