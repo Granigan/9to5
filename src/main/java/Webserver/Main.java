@@ -202,8 +202,6 @@ public class Main {
                 
                 System.out.println("objektiin injektoitu kuvaus: " + a.getValmistusohje());
                 annosDao.saveOrUpdate(a);
-                // Uudestaan!!!
-                annosDao.saveOrUpdate(a);
                 
                 Annos currentAnnos = annosDao.findOne(a);
 
