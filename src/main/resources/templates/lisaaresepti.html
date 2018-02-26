@@ -19,7 +19,7 @@ and open the template in the editor.
             <!-- <ol>
                  <li th:each="raakaaine: ${raaka_aineet}" th:id="${raakaaineStat.index}">-->
             <select name="raakaaine">
-                <option th:each="raakaaine: ${raaka_aineet}" th:value="${raakaaine.id + ', ' + raakaaine.mittayksikko}" th:text="${raakaaine.nimi}"></option>
+                <option th:each="raakaaine: ${raaka_aineet}" th:value="${raakaaine.id}" th:text="${raakaaine.nimi + ', ' + raakaaine.mittayksikko}"></option>
             </select>
             <input type="number" min="0" name="maara" placeholder="Määrä" required></input>
             <input type="text" name="ohje" placeholder="Lisäysohje" required></input>
