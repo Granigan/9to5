@@ -42,7 +42,7 @@ and open the template in the editor.
         <br>
         <form method="POST" action="raaka_ainereseptiin">
             <input th:text="${resNimi}" type="text" name="resNimi" placeholder="Reseptin nimi" required></input>
-            <input th:textfield="${resKuvaus}" placeholder="Valmistusohje"></input>
+            <input th:textfield="${resKuvaus}" name="resKuvaus" placeholder="Valmistusohje"></input>
             <!--th:text="${resNimi}"-->
             <!--th:text="${resKuvaus}"-->
             <!--  </li>

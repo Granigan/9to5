@@ -226,11 +226,13 @@ public class Main {
 
             } else {
                 // reseptinCache:een tallentaminen
+                System.out.println("Starting recipe updating procedure.");
                 System.out.println(req.queryParams());
                 System.out.println(req.queryParams("raakaaine"));
                 //System.out.println(req.queryMap());
                 AnnosRaakaaine r = new AnnosRaakaaine();
                 r.setOhje(req.queryParams("ohje"));
+                System.out.println("ohje: " + r.getOhje());
                 int maara = 0;
                 try {
                     maara = Integer.parseInt(req.queryParams("maara"));
@@ -255,6 +257,7 @@ public class Main {
                 r.setRaakaaineenNimi(realRaak.getNimi());                
                 r.setRaakaaineId(id);
 
+                System.out.println("Ending recipe updating procedure.");
                 reseptinCache.add(r);
                 res.redirect("/lisaaresepti");
             }
