@@ -246,10 +246,11 @@ public class Main {
                 r.setMaara(maara);
                 Raaka_aine raak = new Raaka_aine();
                 // Väliaikainen raaka-aineolio etsintää varten
-                raak.setNimi(req.queryParams("raakaaine"));
+                //raak.setNimi(req.queryParams("raakaaine"));
+                raak.setId(Integer.parseInt(req.queryParams("raakaaine")));
 
                 // Type casting, koska RaakaaineDao palauttaa Object -olion
-                Raaka_aine realRaak = (Raaka_aine) (raakaDao.findOne(raak));
+                Raaka_aine realRaak = raakaDao.findOne(raak);
 
                 r.setRaakaaineenNimi(realRaak.getNimi());
                 r.setRaakaaineId(realRaak.getId());
