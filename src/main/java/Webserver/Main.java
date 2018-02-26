@@ -180,6 +180,8 @@ public class Main {
                     return " ";
                 }
                 
+                System.out.println("Starting recipe saving procedure.");
+                
                 //String nimi = nimiList.get(0);
                 String nimi = req.queryParams("resNimi");
                 nimiList.clear();
@@ -215,6 +217,8 @@ public class Main {
                     }
                    
                 }
+                
+                System.out.println("Ending recipe saving procedure.");
 
                 reseptinCache.clear();
                 res.redirect("/reseptit");

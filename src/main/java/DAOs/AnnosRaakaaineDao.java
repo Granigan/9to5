@@ -247,7 +247,7 @@ public class AnnosRaakaaineDao implements Dao {
             }
 
         } catch (SQLException e) {
-            System.out.println("ongelma lisätessä uutta raaka-ainetta" + e.getMessage());
+            System.out.println("ongelma lisätessä uutta raaka-ainetta saveOrUpdate AnnosRaakaaineDao" + e.getMessage());
         }
         return true;
 
