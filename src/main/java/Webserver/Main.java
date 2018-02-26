@@ -251,7 +251,7 @@ public class Main {
                 raak.setId(id);
 
                 // Type casting, koska RaakaaineDao palauttaa Object -olion
-                Raaka_aine realRaak = raakaDao.findOne(raak);
+                Raaka_aine realRaak = raakaDao.findOne(id);
 
                 r.setRaakaaineenNimi(realRaak.getNimi());
                 //r.setRaakaaineId(realRaak.getId());
