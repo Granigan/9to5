@@ -229,7 +229,7 @@ public class Main {
                 System.out.println("Starting recipe updating procedure.");
                 System.out.println(req.queryParams());
                 System.out.println(req.queryParams("raakaaine"));
-                //System.out.println(req.queryMap());
+
                 AnnosRaakaaine r = new AnnosRaakaaine();
                 r.setOhje(req.queryParams("ohje"));
                 System.out.println("ohje: " + r.getOhje());
