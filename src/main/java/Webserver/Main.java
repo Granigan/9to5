@@ -154,6 +154,7 @@ public class Main {
         Spark.get("/lisaaresepti", (req, res) -> {
 
             String sessio = req.session().id();
+            System.out.println("sessio:" + sessio);
             ArrayList<AnnosRaakaaine> reseptinCache = new ArrayList<>();
             if (!reseptinMapCache.isEmpty()) {
                 if (reseptinMapCache.containsKey(sessio)) {
@@ -172,6 +173,7 @@ public class Main {
         Spark.post("/raaka_ainereseptiin", (req, res) -> {
 
             String sessio = req.session().id();
+            System.out.println("sessio:" + sessio);
             ArrayList<AnnosRaakaaine> reseptinCache = new ArrayList<>();
 
             // JOS on painettu painiketta "valmis"
