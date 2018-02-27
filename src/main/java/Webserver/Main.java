@@ -264,12 +264,12 @@ public class Main {
                 r.setRaakaaineenMittayksikko(realRaak.getMittayksikko());
 
                 System.out.println("Ending recipe updating procedure.");
-                reseptinCache.add(r);
                 if (!reseptinMapCache.isEmpty()) {
                     if (reseptinMapCache.containsKey(sessio)) {
                         reseptinCache = reseptinMapCache.get(sessio);
                     }
                 }
+                reseptinCache.add(r);
                 reseptinMapCache.put(sessio, reseptinCache);
                 res.redirect("/lisaaresepti");
             }
