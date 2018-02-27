@@ -41,8 +41,8 @@ public class Main {
         System.out.println("Server starting.");
 
         // Välimuistissa oleva lisättävä resepti:
-        List<AnnosRaakaaine> reseptinCache = new ArrayList();
-        
+        //List<AnnosRaakaaine> reseptinCache = new ArrayList();
+        HashMap<String, ArrayList<AnnosRaakaaine>> reseptinMapCache = new HashMap<>();
         /**
          * R E I T I T
          */
@@ -52,7 +52,9 @@ public class Main {
             HashMap map = new HashMap<>();
             List<Raaka_aine> raaka_aineet = new ArrayList<>();
             raaka_aineet = raakaDao.findAll();
-            raaka_aineet.forEach(a -> {System.out.println("id:" + a.getId());});
+            raaka_aineet.forEach(a -> {
+                System.out.println("id:" + a.getId());
+            });
             map.put("raaka_aineet", raaka_aineet);
 
             return new ModelAndView(map, "raaka-aine");
@@ -64,7 +66,7 @@ public class Main {
             String raakisNimi = req.queryParams("nimi");
             String raakisMittis = req.queryParams("mittayksikko");
             String raakisKuvaus = req.queryParams("kuvaus");
-            
+
             Raaka_aine r = new Raaka_aine();
             r.setNimi(raakisNimi);
             r.setKuvaus(raakisKuvaus);
@@ -97,9 +99,9 @@ public class Main {
             List<Annos> reseptit = new ArrayList<>();
             reseptit = annosDao.findAll();
             for (Annos annos : reseptit) {
-               List<AnnosRaakaaine> aineet = new ArrayList<>();
-               aineet.addAll(annosaineDao.findAll(annos.getId()));
-               annos.setRaakaaineet(aineet);
+                List<AnnosRaakaaine> aineet = new ArrayList<>();
+                aineet.addAll(annosaineDao.findAll(annos.getId()));
+                annos.setRaakaaineet(aineet);
             }
             map.put("reseptit", reseptit);
 
@@ -151,6 +153,14 @@ public class Main {
 
         Spark.get("/lisaaresepti", (req, res) -> {
 
+            String sessio = req.session().id();
+            ArrayList<AnnosRaakaaine> reseptinCache = new ArrayList<>();
+            if (!reseptinMapCache.isEmpty()) {
+                if (reseptinMapCache.containsKey(sessio)) {
+                    reseptinCache = reseptinMapCache.get(sessio);
+                }
+            }
+
             HashMap map = new HashMap<>();
             List<Raaka_aine> a = raakaDao.findAll();
 
@@ -161,32 +171,42 @@ public class Main {
 
         Spark.post("/raaka_ainereseptiin", (req, res) -> {
 
+            String sessio = req.session().id();
+            ArrayList<AnnosRaakaaine> reseptinCache = new ArrayList<>();
+
             // JOS on painettu painiketta "valmis"
             if (req.queryParams("end") != null) {
-                
+
+                /* Kommentoitu pois, jotta sessiokohtainen cache
                 if (reseptinCache.size() < 1) {
                     res.redirect("/lisaaresepti");
                     return " ";
                 }
-                
+                 */
+                if (!reseptinMapCache.isEmpty()) {
+                    if (!reseptinMapCache.containsKey(sessio)) {
+                        res.redirect("/lisaaresepti");
+                        return " ";
+                    }
+                }
+                reseptinCache = reseptinMapCache.get(sessio);
+
                 System.out.println("Starting recipe saving procedure.");
-                
+
                 String nimi = req.queryParams("resNimi");
 
                 String kuvaus = req.queryParams("resKuvaus");
                 System.out.println("Kalasteltu kuvaus: " + kuvaus);
 
-                
                 Annos a = new Annos();
                 a.setNimi(nimi);
                 a.setValmistusohje(kuvaus);
-                
+
                 System.out.println("objektiin injektoitu kuvaus: " + a.getValmistusohje());
                 annosDao.saveOrUpdate(a);
-                
+
                 Annos currentAnnos = annosDao.findOne(a);
 
-                
                 for (int i = 0; i < reseptinCache.size(); i++) {
                     AnnosRaakaaine r = reseptinCache.get(i);
                     AnnosRaakaaine ar = new AnnosRaakaaine();
@@ -197,16 +217,17 @@ public class Main {
                     ar.setJarjestys(i);
 
                     try {
-                    annosaineDao.saveOrUpdate(ar);
+                        annosaineDao.saveOrUpdate(ar);
                     } catch (SQLException e) {
                         System.out.println("Jokin meni pieleen reseptia tallennettaessa: " + e);
                     }
-                   
+
                 }
-                
+
                 System.out.println("Ending recipe saving procedure.");
 
-                reseptinCache.clear();
+                reseptinMapCache.remove(sessio);
+                //reseptinCache.clear();
                 res.redirect("/reseptit");
                 return " ";
 
@@ -225,10 +246,10 @@ public class Main {
                 } catch (NumberFormatException e) {
                     maara = 0;
                 }
-                
+
                 //Nimi talteen:
                 String nimi = req.queryParams("resNimi");
-           
+
                 r.setMaara(maara);
                 // Väliaikainen raaka-aineolio etsintää varten
                 Raaka_aine raak = new Raaka_aine();
@@ -236,12 +257,13 @@ public class Main {
                 raak.setId(id);
 
                 Raaka_aine realRaak = raakaDao.findOne(id);
-                r.setRaakaaineenNimi(realRaak.getNimi());                
+                r.setRaakaaineenNimi(realRaak.getNimi());
                 r.setRaakaaineId(id);
                 r.setRaakaaineenMittayksikko(realRaak.getMittayksikko());
 
                 System.out.println("Ending recipe updating procedure.");
                 reseptinCache.add(r);
+                reseptinMapCache.put(sessio, reseptinCache);
                 res.redirect("/lisaaresepti");
             }
             return " ";
@@ -257,4 +279,3 @@ public class Main {
     }
 
 }
-
