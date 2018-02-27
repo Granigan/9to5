@@ -19,15 +19,15 @@ public class Main {
     public static void main(String[] args) throws SQLException {
 
         AnnosDao annosDao = new AnnosDao();
-        annosDao.saveOrUpdate(new Annos(-1, "jauhelihakeitto", "kiehauta vesi, lisää ainekset"));
-        Annos keitto = annosDao.findByName("jauhelihakeitto");
-        System.out.println(annosDao.findByName("jauhelihakeitto"));
-        System.out.println(annosDao.findOne(new Annos(-2, "jauhelihakeitto", "")));
-        System.out.println("etsi kaikki:" + annosDao.findAll().toString());
+        //annosDao.saveOrUpdate(new Annos(-1, "jauhelihakeitto", "kiehauta vesi, lisää ainekset"));
+        //Annos keitto = annosDao.findByName("jauhelihakeitto");
+        //System.out.println(annosDao.findByName("jauhelihakeitto"));
+        //System.out.println(annosDao.findOne(new Annos(-2, "jauhelihakeitto", "")));
+        //System.out.println("etsi kaikki:" + annosDao.findAll().toString());
 
         RaakaaineDao raakaDao = new RaakaaineDao();
-        raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
-        raakaDao.saveOrUpdate(new Raaka_aine(0, "jauheliha", "g", "jauheliha, toimii siinä missä soijarouhekin"));
+        //raakaDao.saveOrUpdate(new Raaka_aine(0, "soijarouhe", "g", "ruskea soijarouhe, toimii siinä missä jauhelihakin"));
+        //raakaDao.saveOrUpdate(new Raaka_aine(0, "jauheliha", "g", "jauheliha, toimii siinä missä soijarouhekin"));
         AnnosRaakaaineDao annosaineDao = new AnnosRaakaaineDao();
         //Integer annosid, Integer raakaaineid, Integer jarjestys, Integer maara, String ohje)
         //annosaineDao.saveOrUpdate(new AnnosRaakaaine(keitto.getId(), jauhelihat.get(0).getId(), 1, 400, "Paista ja lisää liemeen"));
