@@ -265,6 +265,11 @@ public class Main {
 
                 System.out.println("Ending recipe updating procedure.");
                 reseptinCache.add(r);
+                if (!reseptinMapCache.isEmpty()) {
+                    if (reseptinMapCache.containsKey(sessio)) {
+                        reseptinCache = reseptinMapCache.get(sessio);
+                    }
+                }
                 reseptinMapCache.put(sessio, reseptinCache);
                 res.redirect("/lisaaresepti");
             }
